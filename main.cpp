@@ -2,22 +2,26 @@
 #include <cmath>
 #include <memory>
 
-void initializeGameboard(const std::shared_ptr<int>& num_cells)
+#include "Cell.h"
+
+void initializeGameboard( std::shared_ptr<int>& num_cells)
 {
-    int numbers[*num_cells + 1];
+    std::shared_ptr<Cell> numbers[*num_cells + 1];
+    const int grid_size = static_cast<int>(sqrt(*num_cells));
     char rowLabel = 'A';
     int colLabel = 1;
     for (int i = 1; i <= *num_cells; i++)
     {
-        numbers[i] = i;
+        const std::shared_ptr<Cell> cell = std::make_shared<Cell>();
+        numbers[i] = cell;
     }
 
     // Print column labels
     std::cout << " ";
-    for ( int i = 1; i <= static_cast<int>(sqrt(*num_cells)); i++)
+    for ( int i = 1; i <= grid_size; i++)
     {
         std::cout << "   " << colLabel;
-        if (i == static_cast<int>(sqrt(*num_cells))) {
+        if (i == grid_size) {
             std::cout << std::endl;
         }
         colLabel++;
@@ -25,7 +29,7 @@ void initializeGameboard(const std::shared_ptr<int>& num_cells)
 
     // Print top outline
     std::cout << "  |--";
-    for ( int j = 1; j <= (static_cast<int>(sqrt(*num_cells)) - 1); j++)
+    for ( int j = 1; j <= grid_size - 1; j++)
     {
         std::cout << "-|--";
     }
@@ -34,18 +38,18 @@ void initializeGameboard(const std::shared_ptr<int>& num_cells)
     // Print cell grid
     for (int i = 1; i <= *num_cells; i++)
     {
-        if ((i - 1) % static_cast<int>(sqrt(*num_cells)) == 0) // Print row label and first col cell
+        if ((i - 1) % grid_size == 0) // Print row label and first col cell
         {
-            std::cout << rowLabel << " | X | ";
-        } else if (i % static_cast<int>(sqrt(*num_cells)) != 0) // Print i:th col cell
+            std::cout << rowLabel << " | " << numbers[i].get()->showCell() << " | ";
+        } else if (i % grid_size != 0) // Print i:th col cell
         {
-            std::cout << "X" << " | ";
+            std::cout << numbers[i].get()->showCell() << " | ";
         } else // Print last col cell of row
         {
-            std::cout << "X" << " |";
+            std::cout << numbers[i].get()->showCell() << " |";
             std::cout << std::endl;
             std::cout << "  |--";
-            for ( int j = 1; j <= (static_cast<int>(sqrt(*num_cells)) - 1); j++)
+            for ( int j = 1; j <= grid_size - 1; j++)
             {
                 std::cout << "-|--";
             }

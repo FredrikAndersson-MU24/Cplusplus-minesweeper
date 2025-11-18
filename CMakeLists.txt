@@ -3,5 +3,10 @@ project(Individuellt_projektarbete)
 
 set(CMAKE_CXX_STANDARD 20)
 
+include_directories(
+        inc
+)
+
 add_executable(i_p
-        main.cpp)
+        main.cpp
+        src/Cell.cpp)
