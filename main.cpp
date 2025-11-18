@@ -18,10 +18,10 @@ void initializeGameboard( std::shared_ptr<int>& num_cells)
 
     // Print column labels
     std::cout << " ";
-    for ( int i = 1; i <= static_cast<int>(sqrt(*num_cells)); i++)
+    for ( int i = 1; i <= grid_size; i++)
     {
         std::cout << "   " << colLabel;
-        if (i == static_cast<int>(sqrt(*num_cells))) {
+        if (i == grid_size) {
             std::cout << std::endl;
         }
         colLabel++;
@@ -29,7 +29,7 @@ void initializeGameboard( std::shared_ptr<int>& num_cells)
 
     // Print top outline
     std::cout << "  |--";
-    for ( int j = 1; j <= (static_cast<int>(sqrt(*num_cells)) - 1); j++)
+    for ( int j = 1; j <= grid_size - 1; j++)
     {
         std::cout << "-|--";
     }
@@ -38,11 +38,10 @@ void initializeGameboard( std::shared_ptr<int>& num_cells)
     // Print cell grid
     for (int i = 1; i <= *num_cells; i++)
     {
-        if ((i - 1) % static_cast<int>(sqrt(*num_cells)) == 0) // Print row label and first col cell
+        if ((i - 1) % grid_size == 0) // Print row label and first col cell
         {
-            std::cout << rowLabel << " | X | ";
-        } else if (i % static_cast<int>(sqrt(*num_cells)) != 0) // Print i:th col cell
             std::cout << rowLabel << " | " << numbers[i].get()->showCell() << " | ";
+        } else if (i % grid_size != 0) // Print i:th col cell
         {
             std::cout << numbers[i].get()->showCell() << " | ";
         } else // Print last col cell of row
@@ -50,7 +49,7 @@ void initializeGameboard( std::shared_ptr<int>& num_cells)
             std::cout << numbers[i].get()->showCell() << " |";
             std::cout << std::endl;
             std::cout << "  |--";
-            for ( int j = 1; j <= (static_cast<int>(sqrt(*num_cells)) - 1); j++)
+            for ( int j = 1; j <= grid_size - 1; j++)
             {
                 std::cout << "-|--";
             }
