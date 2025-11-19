@@ -8,6 +8,7 @@ class GameBoard
 public:
     GameBoard(int num_cells);
     ~GameBoard();
+    void printGameBoard();
     void initGameBoard();
 
 private:
@@ -16,6 +17,9 @@ private:
     std::vector<char> rows;
     void initColumns(int grid_size);
     void initRows(int grid_size);
+    void initColumns();
+    void initRows();
+    void initCells();
 
 
 };

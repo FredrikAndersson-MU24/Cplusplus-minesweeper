@@ -18,6 +18,12 @@ GameBoard::~GameBoard() {
 
 void GameBoard::initGameBoard()
 {
+    initColumns();
+    initRows();
+    initCells();
+}
+
+{
     const std::shared_ptr<int> cells = num_cells.lock();
     std::cout << "num_cells : " << num_cells.lock() << std::endl;
     std::shared_ptr<Cell> numbers[*cells + 1];
@@ -71,7 +77,9 @@ void GameBoard::initGameBoard()
     }
 }
 
-void GameBoard::initColumns(int grid_size)
+// Populating the columns vector with the correct number
+// of column labels given the grid_size parameter.
+void GameBoard::initColumns()
 {
     char colLabel = 1;
     for ( int i = 1; i <= grid_size; i++)
@@ -79,14 +87,31 @@ void GameBoard::initColumns(int grid_size)
         columns.push_back(colLabel);
         colLabel++;
     }
+    std::cout << "columns initiated : " << columns.size() << std::endl;
 }
 
-void GameBoard::initRows(int grid_size)
+// Populating the rows vector with the correct number
+// of row labels given the grid_size parameter.
+void GameBoard::initRows()
 {
     char rowLabel = 'A';
     for ( int i = 1; i <= grid_size; i++)
     {
-        columns.push_back(rowLabel);
+        rows.push_back(rowLabel);
         rowLabel++;
+    }
+    std::cout << "rows initiated : " << rows.size() << std::endl;
+    for (char row : rows)
+    {
+        std::cout << row << std::endl;
+    }
+}
+
+void GameBoard::initCells()
+{
+    for (int i = 1; i <= num_cells; i++)
+    {
+        const std::shared_ptr<Cell> cell = std::make_shared<Cell>();
+        cells.emplace_back(cell);
     }
 }
