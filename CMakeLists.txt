@@ -9,4 +9,5 @@ include_directories(
 
 add_executable(i_p
         main.cpp
-        src/Cell.cpp)
+        src/Cell.cpp
+        src/GameBoard.cpp)
