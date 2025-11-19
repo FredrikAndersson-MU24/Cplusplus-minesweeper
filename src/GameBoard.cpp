@@ -173,3 +173,54 @@ void GameBoard::randomizeMines() const
     }
 
 }
+
+void GameBoard::userChoice(const char* coord, const int choice, const std::shared_ptr<bool>& running)
+{
+    const int cell = findCell(coord);
+    // std::cout << "RESPONSE : " << cell << std::endl;
+    int in = 2;
+    switch (in)
+    {
+    case 1:
+        cells.at(cell).get()->setIsFlagged(true);
+        break;
+    case 2:
+        cells.at(cell).get()->setIsGuessed(true, running, num_cells, grid_size);
+        // std::cout << "FROM SWITCH" << std::endl;
+        break;
+    default:
+        break;
+    }
+
+}
+//
+// void GameBoard::validateCell(const char* coord)
+// {
+//     //The first character is the row
+//     //The second character is the column
+//     char first_char = input[0];
+//     char second_char = input[1];
+//     int char_1 = 0;
+//     int char_2 = 0;
+//     for (char c : rows)
+//     {
+//         if (c == first_char)
+//         {
+//             break;
+//         }
+//         char_1++;
+//     }
+//     for (char c : columns)
+//     {
+//         if (c == second_char)
+//         {
+//             break;
+//         }
+//         char_2++;
+//     }
+//     const int cell = char_1 * grid_size - 1 + char_2;
+//     std::cout << "char 1 : " << char_1 << std::endl;
+//     std::cout << "char 2 : " << char_2 << std::endl;
+//     std::cout << "char 1 : " << char_1 << " * grid_size  + " << "char 2 : " << char_2 << " = " << char_1 * grid_size-1 + char_2 << std::endl;
+//     std::cout << "cell at : " << cell << " = " << cells.at(cell).get()->getId() << std::endl;
+// }
