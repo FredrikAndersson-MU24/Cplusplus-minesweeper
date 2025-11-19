@@ -3,6 +3,8 @@
 #include <memory>
 #include <vector>
 
+#include "Cell.h"
+
 class GameBoard
 {
 public:
@@ -17,6 +19,7 @@ private:
     std::vector<char> rows;
     void initColumns(int grid_size);
     void initRows(int grid_size);
+    std::vector<std::shared_ptr<Cell>> cells;
     void initColumns();
     void initRows();
     void initCells();

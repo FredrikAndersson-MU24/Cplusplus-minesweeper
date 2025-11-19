@@ -107,6 +107,37 @@ void GameBoard::initRows()
     }
 }
 
+void GameBoard::findCell(char input[])
+{
+    //The first character is the row
+    //The second character is the column
+    char first_char = input[0];
+    char second_char = input[1];
+    int char_1 = 0;
+    int char_2 = 0;
+    for (char c : rows)
+    {
+        if (c == first_char)
+        {
+            break;
+        }
+        char_1++;
+    }
+    for (char c : columns)
+    {
+        if (c == second_char)
+        {
+            break;
+        }
+        char_2++;
+    }
+    const int cell = char_1 * grid_size - 1 + char_2;
+    std::cout << "char 1 : " << char_1 << std::endl;
+    std::cout << "char 2 : " << char_2 << std::endl;
+    std::cout << "char 1 : " << char_1 << " * grid_size  + " << "char 2 : " << char_2 << " = " << char_1 * grid_size-1 + char_2 << std::endl;
+    std::cout << "cell at : " << cell << " = " << cells.at(cell).get()->getId() << std::endl;
+}
+
 void GameBoard::initCells()
 {
     for (int i = 1; i <= num_cells; i++)
