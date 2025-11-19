@@ -8,11 +8,11 @@
 class GameBoard
 {
 public:
-    GameBoard(int num_cells);
+    explicit GameBoard(int num_cells);
     ~GameBoard();
-    void printGameBoard();
+    void printGameBoard() const;
     void initGameBoard();
-    void findCell(char input[]);
+    void findCell(const char input[]) const;
 
 private:
     int num_cells; // Total number of cells.
@@ -20,9 +20,11 @@ private:
     std::vector<char> rows;
     std::vector<std::shared_ptr<Cell>> cells;
     int grid_size; // Sqrt of num_cells. To set num of rows and columns.
+    int num_mines;
     void initColumns();
     void initRows();
     void initCells();
+    void randomizeMines() const;
 
 
 };
