@@ -9,6 +9,7 @@ public:
     ~Cell();
     char showCell();
     void setHasMine(bool b);
+    int getId();
 
 private:
     int id;
