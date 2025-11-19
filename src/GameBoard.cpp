@@ -2,6 +2,7 @@
 #include "Cell.h"
 
 #include <cmath>
+#include <functional>
 #include <iostream>
 
 
@@ -23,18 +24,9 @@ void GameBoard::initGameBoard()
     initCells();
 }
 
+void GameBoard::printGameBoard()
 {
-    const std::shared_ptr<int> cells = num_cells.lock();
-    std::cout << "num_cells : " << num_cells.lock() << std::endl;
-    std::shared_ptr<Cell> numbers[*cells + 1];
-    const int grid_size = static_cast<int>(std::sqrt(*cells));
-    initColumns(grid_size);
-    initRows(grid_size);
-    for (int i = 1; i <= *cells; i++)
-    {
-        const std::shared_ptr<Cell> cell = std::make_shared<Cell>();
-        numbers[i] = cell;
-    }
+    int rowCounter = 0; // Counter to extract the correct row label
 
     // Print column labels
     std::cout << " ";
@@ -55,17 +47,18 @@ void GameBoard::initGameBoard()
     std::cout << "-|" << std::endl;
 
     // Print cell grid
-    for (int i = 1; i <= *cells; i++)
+    for (int i = 1; i <= num_cells; i++)
     {
         if ((i - 1) % grid_size == 0) // Print row label and first col cell
         {
-            std::cout << rows.at(i-1) << " | " << numbers[i].get()->showCell() << " | ";
+            std::cout << rows.at(rowCounter) << " | " << cells.at(i - 1).get()->showCell() << " | ";
+            rowCounter++;
         } else if (i % grid_size != 0) // Print i:th col cell
         {
-            std::cout << numbers[i].get()->showCell() << " | ";
+            std::cout << cells.at(i - 1).get()->showCell() << " | ";
         } else // Print last col cell of row
         {
-            std::cout << numbers[i].get()->showCell() << " |";
+            std::cout << cells.at(i - 1).get()->showCell() << " |";
             std::cout << std::endl;
             std::cout << "  |--";
             for ( int j = 1; j <= grid_size - 1; j++)

@@ -14,6 +14,8 @@ int main ()
     std::shared_ptr<GameBoard> game_board = std::make_shared<GameBoard>(num_cells);
     game_board->initGameBoard();
     game_board->printGameBoard();
+    char chars[] = {'B', '2'};
+    game_board->findCell(chars);
 
     return 0;
 }

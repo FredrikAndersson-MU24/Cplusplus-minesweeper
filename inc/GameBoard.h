@@ -12,14 +12,14 @@ public:
     ~GameBoard();
     void printGameBoard();
     void initGameBoard();
+    void findCell(char input[]);
 
 private:
     int num_cells; // Total number of cells.
     std::vector<char> columns;
     std::vector<char> rows;
-    void initColumns(int grid_size);
-    void initRows(int grid_size);
     std::vector<std::shared_ptr<Cell>> cells;
+    int grid_size; // Sqrt of num_cells. To set num of rows and columns.
     void initColumns();
     void initRows();
     void initCells();
