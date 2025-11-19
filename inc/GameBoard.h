@@ -20,9 +20,11 @@ private:
     std::vector<char> rows;
     std::vector<std::shared_ptr<Cell>> cells;
     int grid_size; // Sqrt of num_cells. To set num of rows and columns.
+    int num_mines;
     void initColumns();
     void initRows();
     void initCells();
+    void randomizeMines();
 
 
 };
