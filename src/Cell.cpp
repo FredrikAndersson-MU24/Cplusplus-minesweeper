@@ -26,3 +26,8 @@ void Cell::setHasMine(bool b)
 {
     has_mine = b;
 };
+
+int Cell::getId()
+{
+    return id;
+}
