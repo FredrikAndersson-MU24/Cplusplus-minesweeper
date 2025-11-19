@@ -4,11 +4,13 @@
 #include <cmath>
 #include <functional>
 #include <iostream>
+#include <random>
 
 
-
-GameBoard::GameBoard(int cells) : num_cells(cells),
-    grid_size(static_cast<int>(std::sqrt(cells)))
+GameBoard::GameBoard(int cells) :
+num_cells(cells),
+grid_size(static_cast<int>(std::sqrt(cells))),
+num_mines(grid_size)
 {
     std::cout << "Game board constructed" << std::endl;
 }
@@ -22,6 +24,7 @@ void GameBoard::initGameBoard()
     initColumns();
     initRows();
     initCells();
+    randomizeMines();
 }
 
 void GameBoard::printGameBoard()
@@ -74,7 +77,7 @@ void GameBoard::printGameBoard()
 // of column labels given the grid_size parameter.
 void GameBoard::initColumns()
 {
-    char colLabel = 1;
+    char colLabel = '1';
     for ( int i = 1; i <= grid_size; i++)
     {
         columns.push_back(colLabel);
@@ -138,4 +141,36 @@ void GameBoard::initCells()
         const std::shared_ptr<Cell> cell = std::make_shared<Cell>();
         cells.emplace_back(cell);
     }
+}
+
+void GameBoard::randomizeMines()
+{
+    int range = num_cells;
+    std::random_device r;
+    std::default_random_engine e(r());
+    std::uniform_int_distribution<int> uniform_dist(0, range);
+    int mines[num_mines];
+
+    // std::cout << "Randomize: " << std::endl;
+    for (int i = 0; i < num_mines; i++)
+    {
+        int mean = uniform_dist(e);
+        bool duplicate = false;
+            for (int mine : mines)
+            {
+                while (mine == mean)
+                {
+                    // std::cout << "DUPLICATE : " << mean << std::endl;
+                    mean = uniform_dist(e);
+                    // std::cout << "NEW : " << mean << std::endl;
+                }
+            }
+        mines[i] = mean;
+    }
+    for (int mine : mines)
+    {
+        std::cout << "mine id " << mine << std::endl;
+        cells.at(mine)->setHasMine(true);
+    }
+
 }
