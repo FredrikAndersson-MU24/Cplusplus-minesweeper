@@ -27,7 +27,7 @@ void GameBoard::initGameBoard()
     randomizeMines();
 }
 
-void GameBoard::printGameBoard()
+void GameBoard::printGameBoard() const
 {
     int rowCounter = 0; // Counter to extract the correct row label
 
@@ -103,7 +103,7 @@ void GameBoard::initRows()
     }
 }
 
-void GameBoard::findCell(char input[])
+void GameBoard::findCell(const char input[]) const
 {
     //The first character is the row
     //The second character is the column
@@ -143,7 +143,7 @@ void GameBoard::initCells()
     }
 }
 
-void GameBoard::randomizeMines()
+void GameBoard::randomizeMines() const
 {
     int range = num_cells;
     std::random_device r;
@@ -155,7 +155,6 @@ void GameBoard::randomizeMines()
     for (int i = 0; i < num_mines; i++)
     {
         int mean = uniform_dist(e);
-        bool duplicate = false;
             for (int mine : mines)
             {
                 while (mine == mean)

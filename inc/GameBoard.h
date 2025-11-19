@@ -8,11 +8,11 @@
 class GameBoard
 {
 public:
-    GameBoard(int num_cells);
+    explicit GameBoard(int num_cells);
     ~GameBoard();
-    void printGameBoard();
+    void printGameBoard() const;
     void initGameBoard();
-    void findCell(char input[]);
+    void findCell(const char input[]) const;
 
 private:
     int num_cells; // Total number of cells.
@@ -24,7 +24,7 @@ private:
     void initColumns();
     void initRows();
     void initCells();
-    void randomizeMines();
+    void randomizeMines() const;
 
 
 };
