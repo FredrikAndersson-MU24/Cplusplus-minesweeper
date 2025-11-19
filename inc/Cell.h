@@ -15,8 +15,8 @@ private:
     int id;
     char marker;
     bool has_mine;
-    bool guessed_mine;
-    bool marked_mine;
+    bool is_guessed;
+    bool is_flagged;
 };
 
 #endif //INDIVIDUELLT_PROJEKTARBETE_CELL_H
