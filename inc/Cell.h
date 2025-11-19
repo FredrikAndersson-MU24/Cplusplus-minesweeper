@@ -7,9 +7,9 @@ class Cell
 public:
     Cell();
     ~Cell();
-    char showCell();
+    char showCell() const;
     void setHasMine(bool b);
-    int getId();
+    int getId() const;
 
 private:
     int id;
