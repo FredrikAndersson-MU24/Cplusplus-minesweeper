@@ -5,7 +5,7 @@
 int next_id = 0;
 
 Cell::Cell() :
-id(next_id), marker('X'), has_mine(false), guessed_mine(false), marked_mine(false)
+id(next_id), marker(' '), has_mine(false), is_guessed(false), is_flagged(false)
 {
     std::cout << "Cell " << id << " constructed" << std::endl;
     next_id++;
@@ -18,8 +18,7 @@ Cell::~Cell()
 
 char Cell::showCell()
 {
-    marker = 'o';
-    return marker;
+    return has_mine ? 'X' : 'O';
 }
 
 
