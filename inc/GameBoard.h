@@ -24,7 +24,7 @@ private:
     int grid_size; // Sqrt of num_cells. To set num of rows and columns.
     int num_mines;
     enum class Placement {LEFT, RIGHT, TOP, BOTTOM, TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT, CENTER};
-    Placement placement;
+    Placement placement{};
     void initColumns();
     void initRows();
     void initCells();
