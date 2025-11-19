@@ -6,7 +6,9 @@
 
 
 
-GameBoard::GameBoard(const std::shared_ptr<int>& cells) : num_cells(cells) {
+GameBoard::GameBoard(int cells) : num_cells(cells),
+    grid_size(static_cast<int>(std::sqrt(cells)))
+{
     std::cout << "Game board constructed" << std::endl;
 }
 

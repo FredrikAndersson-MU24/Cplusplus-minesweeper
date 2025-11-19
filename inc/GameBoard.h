@@ -6,12 +6,12 @@
 class GameBoard
 {
 public:
-    GameBoard(const std::shared_ptr<int>& num_cells);
+    GameBoard(int num_cells);
     ~GameBoard();
     void initGameBoard();
 
 private:
-    std::weak_ptr<int> num_cells;
+    int num_cells; // Total number of cells.
     std::vector<char> columns;
     std::vector<char> rows;
     void initColumns(int grid_size);
