@@ -8,15 +8,20 @@ class Cell
 public:
     Cell();
     ~Cell();
-    char showCell();
+    std::string showCell();
     void setHasMine(bool b);
     void setIsFlagged(bool b);
-    void setIsGuessed(bool b, const std::shared_ptr<bool>& running, int num_cells, int grid_size);
+    void setIsGuessed(bool b);
+    void setMarker(const std::string& str);
+    void setAdjacentMines(int i);
+    void userGuess(bool b, const std::shared_ptr<bool>& running);
     int getId() const;
+    bool getHasMine() const;
 
 private:
     int id;
-    char marker;
+    int adjacentMines;
+    std::string marker;
     bool has_mine;
     bool is_guessed;
     bool is_flagged;
