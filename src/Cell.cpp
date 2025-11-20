@@ -1,12 +1,13 @@
 #include "../inc/Cell.h"
 
+#include <format>
 #include <iostream>
 #include <memory>
 
 int next_id = 0;
 
 Cell::Cell() :
-id(next_id), marker('O'), has_mine(false), is_guessed(false), is_flagged(false)
+id(next_id), adjacentMines(0), marker("O"), has_mine(false), is_guessed(false), is_flagged(false)
 {
     // std::cout << "Cell " << id << " constructed" << std::endl;
     next_id++;
@@ -17,21 +18,29 @@ Cell::~Cell()
     // std::cout << "Cell " << id << " destructed" << std::endl;
 }
 
-char Cell::showCell()
+std::string Cell::showCell()
 {
     if (is_flagged)
     {
         marker = 'F';
     }
-    if (is_guessed)
-    {
-        marker = 'o';
-    }
-    if (has_mine && is_guessed)
+        if (has_mine && is_guessed)
     {
         marker = 'X';
+    } else if (is_guessed)
+    {
+        marker = std::to_string(adjacentMines);
+    } else if (has_mine)
+    {
+        marker = 'M';
     }
+
     return marker;
+}
+
+bool Cell::getHasMine() const
+{
+    return has_mine;
 }
 
 
@@ -45,27 +54,36 @@ void Cell::setIsFlagged(bool b)
     is_flagged = b;
 }
 
-void Cell::setIsGuessed(bool b, const std::shared_ptr<bool>& running, int num_cells, int grid_size)
+void Cell::userGuess(bool b, const std::shared_ptr<bool>& running)
 {
-    is_guessed = b;
-    // std::cout << "Has mine : " << has_mine << std::endl;
-    // std::cout << "Is guessed : " << is_guessed << std::endl;
+    setIsGuessed(b);
+    std::cout << "is_guessed && has_mine" << (is_guessed && has_mine) << std::endl;
     if (is_guessed && has_mine)
     {
+        std::cout << "from if " << std::endl;
         *running = false;
+        std::cout << "running " << *running << std::endl;
+
     }
     std::cout << "ID : " << id << std::endl;
-    // revealAdjacentMines(num_cells, grid_size);
+}
+
+void Cell::setMarker(const std::string& str)
+{
+    marker = str;
+}
+
+void Cell::setIsGuessed(bool b)
+{
+    is_guessed = b;
 }
 
 int Cell::getId() const
 {
     return id;
 }
-//
-// char Cell::revealAdjacentMines(int num_cells, int grid_size)
-// {
-//
-//
-//
-// }
+
+void Cell::setAdjacentMines(int i)
+{
+    adjacentMines = i;
+}
