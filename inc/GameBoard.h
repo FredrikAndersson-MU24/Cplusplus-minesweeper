@@ -29,6 +29,8 @@ private:
     void initRows();
     void initCells();
     void randomizeMines() const;
+    void getPlacement(int row_index, int col_index);
+    void getAdjacentMines(int cell) const;
 
 
 };
