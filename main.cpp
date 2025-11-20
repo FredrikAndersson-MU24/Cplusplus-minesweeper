@@ -18,13 +18,14 @@ int main ()
     game_board->printGameBoard();
 
     char chars[] = "C3";
-    while (running)
+    while (*running)
     {
         std::cout << "ENTER : " << std::endl;
 
         std::cin >> chars;
      // game_board->findCell(chars);
     game_board->userChoice(chars, 1, running);
+        game_board->printGameBoard();
     // std::cout << "RUNNING : " << *running << std::endl;
     }
 
