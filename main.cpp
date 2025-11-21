@@ -5,7 +5,7 @@
 #include "GameBoard.h"
 
 
-void gridSizeMenu(std::shared_ptr<GameBoard>& game_board)
+void gridSizeMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame)
 {
     int choice;
     std::cout << "--- NEW GAME ---" << std::endl;
@@ -27,12 +27,11 @@ void gridSizeMenu(std::shared_ptr<GameBoard>& game_board)
         game_board = std::make_shared<GameBoard>(81);
         break;
     case 0:
+        *runGame = false;
         break;
     default:
         break;
     }
-    game_board->initGameBoard();
-    game_board->printGameBoard();
 }
 
 void userChoice(const std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame)
