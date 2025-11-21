@@ -77,13 +77,13 @@ void GameBoard::printGameBoard() const
 // of column labels given the grid_size parameter.
 void GameBoard::initColumns()
 {
-    char colLabel = '1';
+    int colLabel = 1;
     for ( int i = 1; i <= grid_size; i++)
     {
         columns.push_back(colLabel);
         colLabel++;
     }
-    std::cout << "columns initiated : " << columns.size() << std::endl;
+    // std::cout << "columns initiated : " << columns.size() << std::endl;
 }
 
 // Populating the rows vector with the correct number
@@ -96,42 +96,55 @@ void GameBoard::initRows()
         rows.push_back(rowLabel);
         rowLabel++;
     }
-    std::cout << "rows initiated : " << rows.size() << std::endl;
-    for (char row : rows)
-    {
-        std::cout << row << std::endl;
-    }
+    // std::cout << "rows initiated : " << rows.size() << std::endl;
+    // for (char row : rows)
+    // {
+    //     std::cout << row << std::endl;
+    // }
 }
 
-void GameBoard::findCell(const char input[]) const
+int GameBoard::findCell(const char* coord)
 {
-    //The first character is the row
-    //The second character is the column
-    char first_char = input[0];
-    char second_char = input[1];
-    int char_1 = 0;
-    int char_2 = 0;
+    char row = 0;
+    std::string col_as_string;
+    while (*coord)
+    {
+        char temp = *coord;
+        if (std::isalpha(temp))
+        {
+            row = temp;
+        }
+        if (std::isdigit(temp))
+        {
+            col_as_string.push_back(temp);
+        }
+        coord++;
+    }
+    int col_as_int = stoi(col_as_string);
+
+    int row_index = 0;
+    int col_index = 0;
     for (char c : rows)
     {
-        if (c == first_char)
+        if (c == row)
         {
             break;
         }
-        char_1++;
+        row_index++;
     }
-    for (char c : columns)
+    for (int i : columns)
     {
-        if (c == second_char)
+        if (i == col_as_int)
         {
             break;
         }
-        char_2++;
+        col_index++;
     }
-    const int cell = char_1 * grid_size - 1 + char_2;
-    std::cout << "char 1 : " << char_1 << std::endl;
-    std::cout << "char 2 : " << char_2 << std::endl;
-    std::cout << "char 1 : " << char_1 << " * grid_size  + " << "char 2 : " << char_2 << " = " << char_1 * grid_size-1 + char_2 << std::endl;
-    std::cout << "cell at : " << cell << " = " << cells.at(cell).get()->getId() << std::endl;
+    const int cell = row_index * grid_size + col_index;
+    std::cout << "ROW INDEX: " << row_index << std::endl;
+    std::cout << "COL INDEX: " << col_index << std::endl;
+    getPlacement(row_index, col_index);
+    return cell;
 }
 
 void GameBoard::initCells()
@@ -145,14 +158,14 @@ void GameBoard::initCells()
 
 void GameBoard::randomizeMines() const
 {
-    int range = num_cells;
+    int range = num_cells - 1;
     std::random_device r;
     std::default_random_engine e(r());
     std::uniform_int_distribution<int> uniform_dist(0, range);
-    int mines[num_mines];
+    int mines[grid_size];
 
     // std::cout << "Randomize: " << std::endl;
-    for (int i = 0; i < num_mines; i++)
+    for (int i = 0; i < grid_size; i++)
     {
         int mean = uniform_dist(e);
             for (int mine : mines)
@@ -168,8 +181,287 @@ void GameBoard::randomizeMines() const
     }
     for (int mine : mines)
     {
-        std::cout << "mine id " << mine << std::endl;
+        // std::cout << "mine id " << mine << std::endl;
         cells.at(mine)->setHasMine(true);
     }
 
+}
+
+void GameBoard::getPlacement(int row_index, int col_index)
+{
+    if (row_index == 0)
+    {
+        placement = Placement::TOP;
+        if (col_index == 0)
+        {
+            placement = Placement::TOP_LEFT;
+        }
+        if (col_index == columns.size() - 1)
+        {
+            placement = Placement::TOP_RIGHT;
+        }
+    } else if (row_index == rows.size() - 1)
+    {
+        placement = Placement::BOTTOM;
+        if (col_index == 0)
+        {
+            placement = Placement::BOTTOM_LEFT;
+        }
+        if (col_index == columns.size() - 1)
+        {
+            placement = Placement::BOTTOM_RIGHT;
+        }
+    } else if (col_index == 0)
+    {
+        placement = Placement::LEFT;
+    } else if (col_index == columns.size() - 1)
+    {
+        placement = Placement::RIGHT;
+    } else
+    {
+        placement = Placement::CENTER;
+    }
+}
+
+void GameBoard::getAdjacentMines(int cell) const
+{
+    int adjacent = 0;
+    switch (placement)
+    {
+    case Placement::LEFT:
+        if (cells.at(cell-grid_size).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell-grid_size+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        // -grid_size, -grid_size+1, +1, +grid_size, +grid_size+1
+        std::cout << "LEFT" << std::endl;
+        break;
+    case Placement::RIGHT:
+        if (cells.at(cell-grid_size-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell-grid_size).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        // -grid_size-1, -grid_size, -1, +grid_size-1, +grid_size
+        std::cout << "RIGHT" << std::endl;
+        break;
+    case Placement::TOP_RIGHT:
+        if (cells.at(cell-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        // -1, +grid_size-1, +grid_size
+        std::cout << "TOP_RIGHT" << std::endl;
+        break;
+    case Placement::BOTTOM_RIGHT:
+        if (cells.at(cell-grid_size-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell-grid_size).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        // -grid_size-1, -grid_size, -1
+        std::cout << "BOTTOM_RIGHT" << std::endl;
+        break;
+    case Placement::TOP_LEFT:
+        if (cells.at(cell+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        // +1, +grid_size, +grid_size+1
+        std::cout << "TOP_LEFT" << std::endl;
+        break;
+    case Placement::BOTTOM_LEFT:
+        if (cells.at(cell-grid_size).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell-grid_size+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        // -grid_size, -grid_size+1, +1
+        std::cout << "BOTTOM_LEFT" << std::endl;
+        break;
+    case Placement::TOP:
+        if (cells.at(cell-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        // -1, +1, +grid_size-1, +grid_size, +grid_size+1
+        std::cout << "TOP" << std::endl;
+        break;
+    case Placement::BOTTOM:
+        if (cells.at(cell-grid_size-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell-grid_size).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell-grid_size+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        // -grid_size-1, -grid_size, -grid_size+1, -1, +1,
+        std::cout << "BOTTOM" << std::endl;
+        break;
+    case Placement::CENTER:
+        if (cells.at(cell-grid_size-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell-grid_size).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell-grid_size+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size-1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        if (cells.at(cell+grid_size+1).get()->getHasMine())
+        {
+            adjacent++;
+        }
+        //-grid_size-1, -grid_size, -grid_size+1, -1, +1, +grid_size-1, grid_size, +grid_size+1
+        std::cout << "CENTER" << std::endl;
+        break;
+    default: ;
+    }
+    std::cout << "ADJACENT : " << adjacent << std::endl;
+    cells.at(cell).get()->setAdjacentMines(adjacent);
+}
+
+//
+// void GameBoard::validateCell(const char* coord)
+// {
+//     //The first character is the row
+//     //The second character is the column
+//     char first_char = input[0];
+//     char second_char = input[1];
+//     int char_1 = 0;
+//     int char_2 = 0;
+//     for (char c : rows)
+//     {
+//         if (c == first_char)
+//         {
+//             break;
+//         }
+//         char_1++;
+//     }
+//     for (char c : columns)
+//     {
+//         if (c == second_char)
+//         {
+//             break;
+//         }
+//         char_2++;
+//     }
+//     const int cell = char_1 * grid_size - 1 + char_2;
+//     std::cout << "char 1 : " << char_1 << std::endl;
+//     std::cout << "char 2 : " << char_2 << std::endl;
+//     std::cout << "char 1 : " << char_1 << " * grid_size  + " << "char 2 : " << char_2 << " = " << char_1 * grid_size-1 + char_2 << std::endl;
+//     std::cout << "cell at : " << cell << " = " << cells.at(cell).get()->getId() << std::endl;
+// }
+std::vector<std::shared_ptr<Cell>> GameBoard::getCells()
+{
+    return cells;
 }

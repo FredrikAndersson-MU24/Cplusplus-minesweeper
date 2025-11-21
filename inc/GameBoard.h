@@ -12,19 +12,26 @@ public:
     ~GameBoard();
     void printGameBoard() const;
     void initGameBoard();
-    void findCell(const char input[]) const;
+    int findCell(const char* coord);
+    void getAdjacentMines(int cell) const;
+    // int validateCell(const char* coord);
+    std::vector<std::shared_ptr<Cell>> getCells();
 
 private:
     int num_cells; // Total number of cells.
-    std::vector<char> columns;
+    std::vector<int> columns;
     std::vector<char> rows;
     std::vector<std::shared_ptr<Cell>> cells;
     int grid_size; // Sqrt of num_cells. To set num of rows and columns.
     int num_mines;
+    enum class Placement {LEFT, RIGHT, TOP, BOTTOM, TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT, CENTER};
+    Placement placement{};
     void initColumns();
     void initRows();
     void initCells();
     void randomizeMines() const;
+    void getPlacement(int row_index, int col_index);
+
 
 
 };
