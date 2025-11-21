@@ -102,8 +102,7 @@ void mainMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool
                 switch (choice)
                 {
                 case 1:
-                    gridSizeMenu(game_board);
-                    userChoice(game_board, runGame);
+                    gameMenu(game_board);
                     break;
                 case 0:
                     *runGame = false;
