@@ -15,7 +15,7 @@ public:
     void setMarker(const std::string& str);
     void setAdjacentMines(int i);
     int getId() const;
-    bool getHasMine() const;
+    bool hasMine() const;
 
 private:
     int id;
