@@ -35,7 +35,7 @@ void gridSizeMenu(std::shared_ptr<GameBoard>& game_board)
     game_board->printGameBoard();
 }
 
-void userChoice(const std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runMain)
+void userChoice(const std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame)
 {
     int choice;
     bool run = true;
@@ -71,7 +71,7 @@ void userChoice(const std::shared_ptr<GameBoard>& game_board, const std::shared_
                     run = false;
                     break;
                 case 2:
-                    *runMain = false;
+                    *runGame = false;
                     break;
                 default:
                     break;
@@ -91,11 +91,10 @@ void choiceMenu(const std::shared_ptr<GameBoard>& game_board, const std::shared_
 
 }
 
-void mainMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runMain)
+void mainMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame)
 {
-        const std::shared_ptr<bool> running = std::make_shared<bool>(true);
         int choice;
-        while (*running)
+        while (*runGame)
         {
             std::cout << "--- MAIN MENU ---" << std::endl;
                 std::cout << "1. START NEW GAME" << std::endl;
@@ -105,10 +104,10 @@ void mainMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool
                 {
                 case 1:
                     gridSizeMenu(game_board);
-                    userChoice(game_board, runMain);
+                    userChoice(game_board, runGame);
                     break;
                 case 0:
-                    *runMain = false;
+                    *runGame = false;
                     break;
                 default:
                     std::cout << "PLEASE ENTER A VALID CHOICE!" << std::endl;
@@ -121,15 +120,15 @@ void mainMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool
 int main ()
 {
     std::shared_ptr<GameBoard> game_board;
-    const std::shared_ptr<bool> runMain = std::make_shared<bool>(true);
-    std::cout << "RUNNING : " << *runMain << std::endl;
+    const std::shared_ptr<bool> runGame = std::make_shared<bool>(true);
+    std::cout << "RUNNING : " << *runGame << std::endl;
 
 
 
 
-    while (*runMain)
+    while (*runGame)
     {
-        mainMenu(game_board, runMain);
+        mainMenu(game_board, runGame);
     }
 
 
