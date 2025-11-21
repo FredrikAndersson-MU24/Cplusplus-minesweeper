@@ -10,7 +10,8 @@
 GameBoard::GameBoard(int cells) :
 num_cells(cells),
 grid_size(static_cast<int>(std::sqrt(cells))),
-num_mines(grid_size)
+num_mines(grid_size),
+revealed_cells(0)
 {
     std::cout << "Game board constructed" << std::endl;
 }
@@ -464,4 +465,29 @@ void GameBoard::getAdjacentMines(int cell) const
 std::vector<std::shared_ptr<Cell>> GameBoard::getCells()
 {
     return cells;
+}
+
+GameBoard::GameStatus GameBoard::checkGameStatus(int cell)
+{
+    GameStatus response = GameStatus::ACTIVE;
+    if (cells.at(cell)->hasMine())
+    {
+        response = GameStatus::LOSS;
+    }
+    if (num_cells - num_mines == revealed_cells)
+    {
+        response = GameStatus::WIN;
+    }
+    return response;
+}
+
+void GameBoard::flagCell(int cell)
+{
+    cells.at(cell)->setIsFlagged(true);
+}
+
+void GameBoard::revealCell(int cell)
+{
+    cells.at(cell)->setIsGuessed(true);
+    revealed_cells++;
 }
