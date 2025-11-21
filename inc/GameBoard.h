@@ -13,8 +13,9 @@ public:
     void printGameBoard() const;
     void initGameBoard();
     int findCell(const char* coord);
+    void getAdjacentMines(int cell) const;
     // int validateCell(const char* coord);
-    void userChoice(const char* coord, int choice, const std::shared_ptr<bool>& running);
+    std::vector<std::shared_ptr<Cell>> getCells();
 
 private:
     int num_cells; // Total number of cells.
@@ -30,7 +31,7 @@ private:
     void initCells();
     void randomizeMines() const;
     void getPlacement(int row_index, int col_index);
-    void getAdjacentMines(int cell) const;
+
 
 
 };
