@@ -230,23 +230,23 @@ void GameBoard::getAdjacentMines(int cell) const
     switch (placement)
     {
     case Placement::LEFT:
-        if (cells.at(cell-grid_size).get()->getHasMine())
+        if (cells.at(cell-grid_size).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell-grid_size+1).get()->getHasMine())
+        if (cells.at(cell-grid_size+1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+1).get()->getHasMine())
+        if (cells.at(cell+1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size).get()->getHasMine())
+        if (cells.at(cell+grid_size).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size+1).get()->getHasMine())
+        if (cells.at(cell+grid_size+1).get()->hasMine())
         {
             adjacent++;
         }
@@ -254,23 +254,23 @@ void GameBoard::getAdjacentMines(int cell) const
         std::cout << "LEFT" << std::endl;
         break;
     case Placement::RIGHT:
-        if (cells.at(cell-grid_size-1).get()->getHasMine())
+        if (cells.at(cell-grid_size-1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell-grid_size).get()->getHasMine())
+        if (cells.at(cell-grid_size).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell-1).get()->getHasMine())
+        if (cells.at(cell-1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size-1).get()->getHasMine())
+        if (cells.at(cell+grid_size-1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size).get()->getHasMine())
+        if (cells.at(cell+grid_size).get()->hasMine())
         {
             adjacent++;
         }
@@ -278,15 +278,15 @@ void GameBoard::getAdjacentMines(int cell) const
         std::cout << "RIGHT" << std::endl;
         break;
     case Placement::TOP_RIGHT:
-        if (cells.at(cell-1).get()->getHasMine())
+        if (cells.at(cell-1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size-1).get()->getHasMine())
+        if (cells.at(cell+grid_size-1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size).get()->getHasMine())
+        if (cells.at(cell+grid_size).get()->hasMine())
         {
             adjacent++;
         }
@@ -294,15 +294,15 @@ void GameBoard::getAdjacentMines(int cell) const
         std::cout << "TOP_RIGHT" << std::endl;
         break;
     case Placement::BOTTOM_RIGHT:
-        if (cells.at(cell-grid_size-1).get()->getHasMine())
+        if (cells.at(cell-grid_size-1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell-grid_size).get()->getHasMine())
+        if (cells.at(cell-grid_size).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell-1).get()->getHasMine())
+        if (cells.at(cell-1).get()->hasMine())
         {
             adjacent++;
         }
@@ -310,15 +310,15 @@ void GameBoard::getAdjacentMines(int cell) const
         std::cout << "BOTTOM_RIGHT" << std::endl;
         break;
     case Placement::TOP_LEFT:
-        if (cells.at(cell+1).get()->getHasMine())
+        if (cells.at(cell+1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size).get()->getHasMine())
+        if (cells.at(cell+grid_size).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size+1).get()->getHasMine())
+        if (cells.at(cell+grid_size+1).get()->hasMine())
         {
             adjacent++;
         }
@@ -326,15 +326,15 @@ void GameBoard::getAdjacentMines(int cell) const
         std::cout << "TOP_LEFT" << std::endl;
         break;
     case Placement::BOTTOM_LEFT:
-        if (cells.at(cell-grid_size).get()->getHasMine())
+        if (cells.at(cell-grid_size).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell-grid_size+1).get()->getHasMine())
+        if (cells.at(cell-grid_size+1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+1).get()->getHasMine())
+        if (cells.at(cell+1).get()->hasMine())
         {
             adjacent++;
         }
@@ -342,23 +342,23 @@ void GameBoard::getAdjacentMines(int cell) const
         std::cout << "BOTTOM_LEFT" << std::endl;
         break;
     case Placement::TOP:
-        if (cells.at(cell-1).get()->getHasMine())
+        if (cells.at(cell-1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+1).get()->getHasMine())
+        if (cells.at(cell+1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size-1).get()->getHasMine())
+        if (cells.at(cell+grid_size-1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size).get()->getHasMine())
+        if (cells.at(cell+grid_size).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size+1).get()->getHasMine())
+        if (cells.at(cell+grid_size+1).get()->hasMine())
         {
             adjacent++;
         }
@@ -366,23 +366,23 @@ void GameBoard::getAdjacentMines(int cell) const
         std::cout << "TOP" << std::endl;
         break;
     case Placement::BOTTOM:
-        if (cells.at(cell-grid_size-1).get()->getHasMine())
+        if (cells.at(cell-grid_size-1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell-grid_size).get()->getHasMine())
+        if (cells.at(cell-grid_size).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell-grid_size+1).get()->getHasMine())
+        if (cells.at(cell-grid_size+1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell-1).get()->getHasMine())
+        if (cells.at(cell-1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+1).get()->getHasMine())
+        if (cells.at(cell+1).get()->hasMine())
         {
             adjacent++;
         }
@@ -390,35 +390,35 @@ void GameBoard::getAdjacentMines(int cell) const
         std::cout << "BOTTOM" << std::endl;
         break;
     case Placement::CENTER:
-        if (cells.at(cell-grid_size-1).get()->getHasMine())
+        if (cells.at(cell-grid_size-1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell-grid_size).get()->getHasMine())
+        if (cells.at(cell-grid_size).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell-grid_size+1).get()->getHasMine())
+        if (cells.at(cell-grid_size+1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell-1).get()->getHasMine())
+        if (cells.at(cell-1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+1).get()->getHasMine())
+        if (cells.at(cell+1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size-1).get()->getHasMine())
+        if (cells.at(cell+grid_size-1).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size).get()->getHasMine())
+        if (cells.at(cell+grid_size).get()->hasMine())
         {
             adjacent++;
         }
-        if (cells.at(cell+grid_size+1).get()->getHasMine())
+        if (cells.at(cell+grid_size+1).get()->hasMine())
         {
             adjacent++;
         }
