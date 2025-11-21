@@ -20,16 +20,15 @@ Cell::~Cell()
 
 std::string Cell::showCell()
 {
-    if (is_flagged)
-    {
-        marker = 'F';
-    }
-        if (has_mine && is_guessed)
+    if (has_mine && is_guessed)
     {
         marker = 'X';
     } else if (is_guessed)
     {
         marker = std::to_string(adjacentMines);
+    } else if (is_flagged)
+    {
+        marker = 'F';
     } else if (has_mine)
     {
         marker = 'M';
@@ -52,20 +51,6 @@ void Cell::setHasMine(bool b)
 void Cell::setIsFlagged(bool b)
 {
     is_flagged = b;
-}
-
-void Cell::userGuess(bool b, const std::shared_ptr<bool>& running)
-{
-    setIsGuessed(b);
-    std::cout << "is_guessed && has_mine" << (is_guessed && has_mine) << std::endl;
-    if (is_guessed && has_mine)
-    {
-        std::cout << "from if " << std::endl;
-        *running = false;
-        std::cout << "running " << *running << std::endl;
-
-    }
-    std::cout << "ID : " << id << std::endl;
 }
 
 void Cell::setMarker(const std::string& str)

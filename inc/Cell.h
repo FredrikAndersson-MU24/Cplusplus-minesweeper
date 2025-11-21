@@ -14,7 +14,6 @@ public:
     void setIsGuessed(bool b);
     void setMarker(const std::string& str);
     void setAdjacentMines(int i);
-    void userGuess(bool b, const std::shared_ptr<bool>& running);
     int getId() const;
     bool getHasMine() const;
 
