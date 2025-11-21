@@ -34,12 +34,9 @@ void gridSizeMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<
     }
 }
 
-void userChoice(const std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame)
+void userChoice(const std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame, std::shared_ptr<GameBoard::GameStatus>& game_status)
 {
     int choice;
-    bool run = true;
-    while (run)
-    {
         std::cout << "What would you like to do?" << std::endl;
         char chars[] = "A1";
         std::cout << "1. Flag" << std::endl;
@@ -53,36 +50,15 @@ void userChoice(const std::shared_ptr<GameBoard>& game_board, const std::shared_
         switch (choice)
         {
         case 1:
-            cells.at(cell).get()->setIsFlagged(true);
+            game_board->flagCell(cell);
             break;
         case 2:
-            cells.at(cell).get()->setIsGuessed(true);
-            if (cells.at(cell).get()->getHasMine())
-            {
-                std::cout << "BA-DUM! YOU STEPPED ON A MINE" << std::endl;
-                std::cout << "WOULD YOU LIKE TO PLAY AGAIN?" << std::endl;
-                std::cout << "1. YES" << std::endl;
-                std::cout << "2. NO" << std::endl;
-                std::cin >> choice;
-                switch (choice)
-                {
-                case 1:
-                    run = false;
-                    break;
-                case 2:
-                    *runGame = false;
-                    break;
-                default:
-                    break;
-                }
-            }
+            game_board->revealCell(cell);
             break;
         default:
             break;
         }
-        game_board->printGameBoard();
-    }
-
+        *game_status = game_board->checkGameStatus(cell);
 }
 
 void gameMenu(std::shared_ptr<GameBoard>& game_board)
