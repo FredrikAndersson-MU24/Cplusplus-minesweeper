@@ -187,26 +187,6 @@ void GameBoard::randomizeMines() const
 
 }
 
-void GameBoard::userChoice(const char* coord, const int choice, const std::shared_ptr<bool>& running)
-{
-    const int cell = findCell(coord);
-    getAdjacentMines(cell);
-    int in = 2;
-    switch (in)
-    {
-    case 1:
-        cells.at(cell).get()->setIsFlagged(true);
-        break;
-    case 2:
-        cells.at(cell).get()->userGuess(true, running);
-        // std::cout << "FROM SWITCH" << std::endl;
-        break;
-    default:
-        break;
-    }
-
-}
-
 void GameBoard::getPlacement(int row_index, int col_index)
 {
     if (row_index == 0)
@@ -481,4 +461,7 @@ void GameBoard::getAdjacentMines(int cell) const
 //     std::cout << "char 1 : " << char_1 << " * grid_size  + " << "char 2 : " << char_2 << " = " << char_1 * grid_size-1 + char_2 << std::endl;
 //     std::cout << "cell at : " << cell << " = " << cells.at(cell).get()->getId() << std::endl;
 // }
-
+std::vector<std::shared_ptr<Cell>> GameBoard::getCells()
+{
+    return cells;
+}
