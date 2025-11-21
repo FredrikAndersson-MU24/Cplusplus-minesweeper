@@ -85,9 +85,33 @@ void userChoice(const std::shared_ptr<GameBoard>& game_board, const std::shared_
 
 }
 
-void choiceMenu(const std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& running)
+void gameMenu(std::shared_ptr<GameBoard>& game_board)
 {
+    std::shared_ptr<bool> run = std::make_shared<bool>(true);
+    std::shared_ptr<GameBoard::GameStatus> status = std::make_shared<GameBoard::GameStatus>(GameBoard::GameStatus::ACTIVE);
+    gridSizeMenu(game_board, run);
+            game_board->initGameBoard();
+    while (*run)
+    {
+        switch (*status)
+        {
+        case GameBoard::GameStatus::ACTIVE:
 
+            game_board->printGameBoard();
+            userChoice(game_board, run, status);
+            break;
+        case GameBoard::GameStatus::WIN:
+            std::cout << "YOU HAVE WON!" << std::endl;
+            // TODO Add wins to player?
+            *run = false;
+            break;
+        case GameBoard::GameStatus::LOSS:
+            std::cout << "YOU HAVE LOST!" << std::endl;
+            // TODO Add loss to player?
+            *run = false;
+            break;
+        }
+    }
 }
 
 void mainMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame)
