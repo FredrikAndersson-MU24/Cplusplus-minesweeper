@@ -1,9 +1,7 @@
 #include <iostream>
-#include <cmath>
 #include <memory>
 
 #include "GameBoard.h"
-
 
 void gridSizeMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame)
 {
@@ -119,16 +117,9 @@ int main ()
 {
     std::shared_ptr<GameBoard> game_board;
     const std::shared_ptr<bool> runGame = std::make_shared<bool>(true);
-    std::cout << "RUNNING : " << *runGame << std::endl;
-
-
-
-
     while (*runGame)
     {
         mainMenu(game_board, runGame);
     }
-
-
     return 0;
 }
