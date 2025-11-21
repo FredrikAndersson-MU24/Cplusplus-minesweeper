@@ -1,8 +1,6 @@
 #include "../inc/Cell.h"
 
 #include <format>
-#include <iostream>
-#include <memory>
 
 int next_id = 0;
 
@@ -37,7 +35,7 @@ std::string Cell::showCell()
     return marker;
 }
 
-bool Cell::getHasMine() const
+bool Cell::hasMine() const
 {
     return has_mine;
 }
