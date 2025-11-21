@@ -17,12 +17,15 @@ void gridSizeMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<
     {
     case 1:
         game_board = std::make_shared<GameBoard>(9);
+        game_board->initGameBoard();
         break;
     case 2:
         game_board = std::make_shared<GameBoard>(36);
+        game_board->initGameBoard();
         break;
     case 3:
         game_board = std::make_shared<GameBoard>(81);
+        game_board->initGameBoard();
         break;
     case 0:
         *runGame = false;
@@ -64,7 +67,6 @@ void gameMenu(std::shared_ptr<GameBoard>& game_board)
     std::shared_ptr<bool> run = std::make_shared<bool>(true);
     std::shared_ptr<GameBoard::GameStatus> status = std::make_shared<GameBoard::GameStatus>(GameBoard::GameStatus::ACTIVE);
     gridSizeMenu(game_board, run);
-            game_board->initGameBoard();
     while (*run)
     {
         switch (*status)
