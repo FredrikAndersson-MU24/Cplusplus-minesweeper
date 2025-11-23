@@ -68,7 +68,7 @@ bool validCoordinate(const char* input, const std::vector<char>& rows, const std
         input++;
         index++;
     }
-    if (validRow)
+    if (validRow && !col_as_string.empty())
     {
         const int col_as_int = stoi(col_as_string);
         std::cout << col_as_int << std::endl;
@@ -80,6 +80,9 @@ bool validCoordinate(const char* input, const std::vector<char>& rows, const std
                 break;
             }
         }
+    } else
+    {
+            std::cout << "INVALID ROW ERROR 5" << std::endl;
     }
     return validRow && validColumn;
 }
