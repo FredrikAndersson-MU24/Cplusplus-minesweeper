@@ -5,9 +5,11 @@ set(CMAKE_CXX_STANDARD 20)
 
 include_directories(
         inc
+        utils/inc
 )
 
-add_executable(i_p
+add_executable(minesweeper
         main.cpp
         src/Cell.cpp
-        src/GameBoard.cpp)
+        src/GameBoard.cpp
+        utils/src/InputHandlers.cpp)
