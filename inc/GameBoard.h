@@ -20,6 +20,8 @@ public:
     std::vector<std::shared_ptr<Cell>> getCells();
     enum class GameStatus {ACTIVE, WIN, LOSS};
     GameStatus checkGameStatus(int cell);
+    std::vector<int> getColumns();
+    std::vector<char> getRows();
 
 private:
     int num_cells; // Total number of cells.
