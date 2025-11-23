@@ -2,18 +2,17 @@
 #include <memory>
 
 #include "GameBoard.h"
+#include "utils/inc/InputHandlers.h"
 
 void gridSizeMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame)
 {
-    int choice;
     std::cout << "--- NEW GAME ---" << std::endl;
     std::cout << "Please select grid size:" << std::endl;
     std::cout << "1. 3*3" << std::endl;
     std::cout << "2. 6*6" << std::endl;
     std::cout << "3. 9*9" << std::endl;
     std::cout << "0. QUIT" << std::endl;
-    std::cin >> choice;
-    switch (choice)
+    switch (getIntInRange(0, 3))
     {
     case 1:
         game_board = std::make_shared<GameBoard>(9);
@@ -37,23 +36,24 @@ void gridSizeMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<
 
 void userChoice(const std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame, std::shared_ptr<GameBoard::GameStatus>& game_status)
 {
-    int choice;
         std::cout << "What would you like to do?" << std::endl;
-        char chars[] = "A1";
         std::cout << "1. Flag" << std::endl;
         std::cout << "2. Guess" << std::endl;
-        std::cin >> choice;
-        std::cout << "Enter coordinate  : " << std::endl;
-        std::cin >> chars;
-        const int cell = game_board->findCell(chars);
+        const int choice = getIntInRange(1, 2);
+        const std::string coord = getValidCoordinate(game_board.get()->getRows(), game_board.get()->getColumns());
+        const int cell = game_board->findCell(coord.c_str());
         const std::vector<std::shared_ptr<Cell>> cells = game_board->getCells();
         game_board->getAdjacentMines(cell);
         switch (choice)
         {
         case 1:
+            std::cout << "from flag" << std::endl;
+
             game_board->flagCell(cell);
             break;
         case 2:
+            std::cout << "from reveal" << std::endl;
+
             game_board->revealCell(cell);
             break;
         default:
@@ -72,7 +72,6 @@ void gameMenu(std::shared_ptr<GameBoard>& game_board)
         switch (*status)
         {
         case GameBoard::GameStatus::ACTIVE:
-
             game_board->printGameBoard();
             userChoice(game_board, run, status);
             break;
@@ -92,13 +91,12 @@ void gameMenu(std::shared_ptr<GameBoard>& game_board)
 
 void mainMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame)
 {
-        int choice;
         while (*runGame)
         {
             std::cout << "--- MAIN MENU ---" << std::endl;
                 std::cout << "1. START NEW GAME" << std::endl;
                 std::cout << "0. QUIT" << std::endl;
-                std::cin >> choice;
+                const int choice = getIntInRange(0, 1);
                 switch (choice)
                 {
                 case 1:

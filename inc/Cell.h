@@ -16,6 +16,7 @@ public:
     void setAdjacentMines(int i);
     int getId() const;
     bool hasMine() const;
+    bool isFlagged() const;
 
 private:
     int id;

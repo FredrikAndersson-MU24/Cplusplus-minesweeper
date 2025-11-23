@@ -113,7 +113,7 @@ int GameBoard::findCell(const char* coord)
         char temp = *coord;
         if (std::isalpha(temp))
         {
-            row = temp;
+            row = static_cast<char>(toupper(temp));
         }
         if (std::isdigit(temp))
         {
@@ -121,7 +121,7 @@ int GameBoard::findCell(const char* coord)
         }
         coord++;
     }
-    int col_as_int = stoi(col_as_string);
+    const int col_as_int = stoi(col_as_string);
 
     int row_index = 0;
     int col_index = 0;
@@ -470,6 +470,10 @@ std::vector<std::shared_ptr<Cell>> GameBoard::getCells()
 GameBoard::GameStatus GameBoard::checkGameStatus(int cell)
 {
     GameStatus response = GameStatus::ACTIVE;
+    if (cells.at(cell)->hasMine() && cells.at(cell)->isFlagged())
+    {
+        response = GameStatus::ACTIVE;
+    }
     if (cells.at(cell)->hasMine())
     {
         response = GameStatus::LOSS;
@@ -490,4 +494,14 @@ void GameBoard::revealCell(int cell)
 {
     cells.at(cell)->setIsGuessed(true);
     revealed_cells++;
+}
+
+std::vector<int> GameBoard::getColumns()
+{
+    return columns;
+}
+
+std::vector<char> GameBoard::getRows()
+{
+    return rows;
 }
