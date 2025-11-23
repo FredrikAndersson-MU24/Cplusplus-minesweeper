@@ -98,11 +98,6 @@ void GameBoard::initRows()
         rows.push_back(rowLabel);
         rowLabel++;
     }
-    // std::cout << "rows initiated : " << rows.size() << std::endl;
-    // for (char row : rows)
-    // {
-    //     std::cout << row << std::endl;
-    // }
 }
 
 int GameBoard::findCell(const char* coord)
@@ -143,8 +138,6 @@ int GameBoard::findCell(const char* coord)
         col_index++;
     }
     const int cell = row_index * grid_size + col_index;
-    std::cout << "ROW INDEX: " << row_index << std::endl;
-    std::cout << "COL INDEX: " << col_index << std::endl;
     getPlacement(row_index, col_index);
     return cell;
 }
@@ -256,39 +249,6 @@ void GameBoard::getAdjacentMines(const int cell)
     std::cout << "ADJACENT : " << adjacent << std::endl;
     cells.at(cell).get()->setAdjacentMines(adjacent);
 }
-
-//
-// void GameBoard::validateCell(const char* coord)
-// {
-//     //The first character is the row
-//     //The second character is the column
-//     char first_char = input[0];
-//     char second_char = input[1];
-//     int char_1 = 0;
-//     int char_2 = 0;
-//     for (char c : rows)
-//     {
-//         if (c == first_char)
-//         {
-//             break;
-//         }
-//         char_1++;
-//     }
-//     for (char c : columns)
-//     {
-//         if (c == second_char)
-//         {
-//             break;
-//         }
-//         char_2++;
-//     }
-//     const int cell = char_1 * grid_size - 1 + char_2;
-//     std::cout << "char 1 : " << char_1 << std::endl;
-//     std::cout << "char 2 : " << char_2 << std::endl;
-//     std::cout << "char 1 : " << char_1 << " * grid_size  + " << "char 2 : " << char_2 << " = " << char_1 * grid_size-1 + char_2 << std::endl;
-//     std::cout << "cell at : " << cell << " = " << cells.at(cell).get()->getId() << std::endl;
-// }
-
 
 
 std::vector<std::shared_ptr<Cell>> GameBoard::getCells()
