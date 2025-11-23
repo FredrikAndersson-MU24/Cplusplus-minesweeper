@@ -176,7 +176,7 @@ void GameBoard::randomizeMines() const
     }
 }
 
-void GameBoard::getPlacement(int row_index, int col_index)
+void GameBoard::getPlacement(const int row_index, const int col_index)
 {
     if (row_index == 0)
     {
