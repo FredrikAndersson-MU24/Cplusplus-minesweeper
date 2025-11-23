@@ -15,16 +15,13 @@ void gridSizeMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<
     switch (getIntInRange(0, 3))
     {
     case 1:
-        game_board = std::make_shared<GameBoard>(9);
-        game_board->initGameBoard();
+        GameBoard::initGameBoard(game_board, 9);
         break;
     case 2:
-        game_board = std::make_shared<GameBoard>(36);
-        game_board->initGameBoard();
+        GameBoard::initGameBoard(game_board, 36);
         break;
     case 3:
-        game_board = std::make_shared<GameBoard>(81);
-        game_board->initGameBoard();
+        GameBoard::initGameBoard(game_board, 81);
         break;
     case 0:
         *runGame = false;
