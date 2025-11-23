@@ -13,7 +13,7 @@ public:
     void printGameBoard() const;
     void initGameBoard();
     int findCell(const char* coord);
-    void getAdjacentMines(int cell) const;
+    void getAdjacentMines(int cell);
     void flagCell(int cell);
     void revealCell(int cell);
     // int validateCell(const char* coord);
@@ -39,9 +39,23 @@ private:
     void initCells();
     void randomizeMines() const;
     void getPlacement(int row_index, int col_index);
-
-
-
+    bool hasAdjacentMineAtMinusGridSizeMinusOne(int cell) const;
+    bool hasAdjacentMineAtMinusGridSize(int cell) const;
+    bool hasAdjacentMineAtMinusGridSizePlusOne(int cell) const;
+    bool hasAdjacentMineAtMinusOne(int cell) const;
+    bool hasAdjacentMineAtPlusOne(int cell) const;
+    bool hasAdjacentMineAtPlusGridSizeMinusOne(int cell) const;
+    bool hasAdjacentMineAtPlusGridSize(int cell) const;
+    bool hasAdjacentMineAtPlusGridSizePlusOne(int cell);
+    int getAdjacentMinesTopLeft(int cell);
+    int getAdjacentMinesLeft(int cell);
+    int getAdjacentMinesRight(int cell);
+    int getAdjacentMinesTopRight(int cell);
+    int getAdjacentMinesBottomRight(int cell);
+    int getAdjacentMinesBottomLeft(int cell);
+    int getAdjacentMinesTop(int cell);
+    int getAdjacentMinesBottom(int cell);
+    int getAdjacentMinesCenter(int cell);
 };
 
 

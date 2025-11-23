@@ -164,8 +164,6 @@ void GameBoard::randomizeMines() const
     std::default_random_engine e(r());
     std::uniform_int_distribution<int> uniform_dist(0, range);
     int mines[grid_size];
-
-    // std::cout << "Randomize: " << std::endl;
     for (int i = 0; i < grid_size; i++)
     {
         int mean = uniform_dist(e);
@@ -173,19 +171,15 @@ void GameBoard::randomizeMines() const
             {
                 while (mine == mean)
                 {
-                    // std::cout << "DUPLICATE : " << mean << std::endl;
                     mean = uniform_dist(e);
-                    // std::cout << "NEW : " << mean << std::endl;
                 }
             }
         mines[i] = mean;
     }
-    for (int mine : mines)
+    for (const int mine : mines)
     {
-        // std::cout << "mine id " << mine << std::endl;
         cells.at(mine)->setHasMine(true);
     }
-
 }
 
 void GameBoard::getPlacement(int row_index, int col_index)
@@ -224,206 +218,37 @@ void GameBoard::getPlacement(int row_index, int col_index)
     }
 }
 
-void GameBoard::getAdjacentMines(int cell) const
+void GameBoard::getAdjacentMines(const int cell)
 {
     int adjacent = 0;
     switch (placement)
     {
     case Placement::LEFT:
-        if (cells.at(cell-grid_size).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell-grid_size+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        // -grid_size, -grid_size+1, +1, +grid_size, +grid_size+1
-        std::cout << "LEFT" << std::endl;
+        adjacent = getAdjacentMinesLeft(cell);
         break;
     case Placement::RIGHT:
-        if (cells.at(cell-grid_size-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell-grid_size).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size).get()->hasMine())
-        {
-            adjacent++;
-        }
-        // -grid_size-1, -grid_size, -1, +grid_size-1, +grid_size
-        std::cout << "RIGHT" << std::endl;
+        adjacent = getAdjacentMinesRight(cell);
         break;
     case Placement::TOP_RIGHT:
-        if (cells.at(cell-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size).get()->hasMine())
-        {
-            adjacent++;
-        }
-        // -1, +grid_size-1, +grid_size
-        std::cout << "TOP_RIGHT" << std::endl;
+        adjacent = getAdjacentMinesTopRight(cell);
         break;
     case Placement::BOTTOM_RIGHT:
-        if (cells.at(cell-grid_size-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell-grid_size).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        // -grid_size-1, -grid_size, -1
-        std::cout << "BOTTOM_RIGHT" << std::endl;
+        adjacent = getAdjacentMinesBottomRight(cell);
         break;
     case Placement::TOP_LEFT:
-        if (cells.at(cell+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        // +1, +grid_size, +grid_size+1
-        std::cout << "TOP_LEFT" << std::endl;
+        adjacent = getAdjacentMinesTopLeft(cell);
         break;
     case Placement::BOTTOM_LEFT:
-        if (cells.at(cell-grid_size).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell-grid_size+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        // -grid_size, -grid_size+1, +1
-        std::cout << "BOTTOM_LEFT" << std::endl;
+        adjacent = getAdjacentMinesBottomLeft(cell);
         break;
     case Placement::TOP:
-        if (cells.at(cell-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        // -1, +1, +grid_size-1, +grid_size, +grid_size+1
-        std::cout << "TOP" << std::endl;
+        adjacent = getAdjacentMinesTop(cell);
         break;
     case Placement::BOTTOM:
-        if (cells.at(cell-grid_size-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell-grid_size).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell-grid_size+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        // -grid_size-1, -grid_size, -grid_size+1, -1, +1,
-        std::cout << "BOTTOM" << std::endl;
+        adjacent = getAdjacentMinesBottom(cell);
         break;
     case Placement::CENTER:
-        if (cells.at(cell-grid_size-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell-grid_size).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell-grid_size+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size-1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size).get()->hasMine())
-        {
-            adjacent++;
-        }
-        if (cells.at(cell+grid_size+1).get()->hasMine())
-        {
-            adjacent++;
-        }
-        //-grid_size-1, -grid_size, -grid_size+1, -1, +1, +grid_size-1, grid_size, +grid_size+1
-        std::cout << "CENTER" << std::endl;
+        adjacent = getAdjacentMinesCenter(cell);
         break;
     default: ;
     }
@@ -462,6 +287,9 @@ void GameBoard::getAdjacentMines(int cell) const
 //     std::cout << "char 1 : " << char_1 << " * grid_size  + " << "char 2 : " << char_2 << " = " << char_1 * grid_size-1 + char_2 << std::endl;
 //     std::cout << "cell at : " << cell << " = " << cells.at(cell).get()->getId() << std::endl;
 // }
+
+
+
 std::vector<std::shared_ptr<Cell>> GameBoard::getCells()
 {
     return cells;
@@ -504,4 +332,137 @@ std::vector<int> GameBoard::getColumns()
 std::vector<char> GameBoard::getRows()
 {
     return rows;
+}
+
+bool GameBoard::hasAdjacentMineAtMinusGridSizeMinusOne(const int cell) const
+{
+    return cells.at(cell-grid_size-1).get()->hasMine();
+}
+
+bool GameBoard::hasAdjacentMineAtMinusGridSize(const int cell) const
+{
+    return cells.at(cell-grid_size).get()->hasMine();
+}
+
+bool GameBoard::hasAdjacentMineAtMinusGridSizePlusOne(const int cell) const
+{
+    return cells.at(cell-grid_size+1).get()->hasMine();
+}
+
+bool GameBoard::hasAdjacentMineAtMinusOne(const int cell) const
+{
+    return cells.at(cell-1).get()->hasMine();
+}
+
+bool GameBoard::hasAdjacentMineAtPlusOne(const int cell) const
+{
+    return cells.at(cell-1).get()->hasMine();
+}
+
+bool GameBoard::hasAdjacentMineAtPlusGridSizeMinusOne(const int cell) const
+{
+    return cells.at(cell+grid_size-1).get()->hasMine();
+}
+bool GameBoard::hasAdjacentMineAtPlusGridSize(const int cell) const
+{
+    return cells.at(cell+grid_size).get()->hasMine();
+}
+
+bool GameBoard::hasAdjacentMineAtPlusGridSizePlusOne(int cell)
+{
+    return cells.at(cell+grid_size+1).get()->hasMine();
+}
+
+int GameBoard::getAdjacentMinesTopLeft(const int cell)
+{
+    int adjacent = 0;
+    if (hasAdjacentMineAtPlusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSize(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSizePlusOne(cell)) adjacent++;
+    return adjacent;
+}
+
+int GameBoard::getAdjacentMinesLeft(const int cell)
+{
+    int adjacent = 0;
+    if (hasAdjacentMineAtMinusGridSize(cell)) adjacent++;
+    if (hasAdjacentMineAtMinusGridSizePlusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSize(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSizePlusOne(cell)) adjacent++;
+    return adjacent;
+}
+
+int GameBoard::getAdjacentMinesRight(const int cell)
+{
+    int adjacent = 0;
+    if (hasAdjacentMineAtMinusGridSizeMinusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtMinusGridSize(cell)) adjacent++;
+    if (hasAdjacentMineAtMinusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSizeMinusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSize(cell)) adjacent++;
+    return adjacent;
+}
+
+int GameBoard::getAdjacentMinesTopRight(const int cell)
+{
+    int adjacent = 0;
+    if (hasAdjacentMineAtMinusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSizeMinusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSize(cell)) adjacent++;
+    return adjacent;
+}
+
+int GameBoard::getAdjacentMinesBottomRight(const int cell)
+{
+    int adjacent = 0;
+    if (hasAdjacentMineAtMinusGridSizeMinusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtMinusGridSize(cell)) adjacent++;
+    if (hasAdjacentMineAtMinusOne(cell)) adjacent++;
+    return adjacent;
+}
+
+int GameBoard::getAdjacentMinesBottomLeft(const int cell)
+{
+    int adjacent = 0;
+    if (hasAdjacentMineAtMinusGridSize(cell)) adjacent++;
+    if (hasAdjacentMineAtMinusGridSizePlusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusOne(cell)) adjacent++;
+    return adjacent;
+}
+
+int GameBoard::getAdjacentMinesTop(const int cell)
+{
+    int adjacent = 0;
+    if (hasAdjacentMineAtMinusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSizeMinusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSize(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSizePlusOne(cell)) adjacent++;
+    return adjacent;
+}
+
+int GameBoard::getAdjacentMinesBottom(const int cell)
+{
+    int adjacent = 0;
+    if (hasAdjacentMineAtMinusGridSizeMinusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtMinusGridSize(cell)) adjacent++;
+    if (hasAdjacentMineAtMinusGridSizePlusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtMinusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusOne(cell)) adjacent++;
+    return adjacent;
+}
+
+int GameBoard::getAdjacentMinesCenter(const int cell)
+{
+    int adjacent = 0;
+    if (hasAdjacentMineAtMinusGridSizeMinusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtMinusGridSize(cell)) adjacent++;
+    if (hasAdjacentMineAtMinusGridSizePlusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtMinusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSizeMinusOne(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSize(cell)) adjacent++;
+    if (hasAdjacentMineAtPlusGridSizePlusOne(cell)) adjacent++;
+    return adjacent;
 }
