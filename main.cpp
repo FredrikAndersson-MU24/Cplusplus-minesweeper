@@ -39,18 +39,13 @@ void userChoice(const std::shared_ptr<GameBoard>& game_board, const std::shared_
         const int choice = getIntInRange(1, 2);
         const std::string coord = getValidCoordinate(game_board.get()->getRows(), game_board.get()->getColumns());
         const int cell = game_board->findCell(coord.c_str());
-        const std::vector<std::shared_ptr<Cell>> cells = game_board->getCells();
-        game_board->getAdjacentMines(cell);
         switch (choice)
         {
         case 1:
-            std::cout << "from flag" << std::endl;
-
             game_board->flagCell(cell);
             break;
         case 2:
-            std::cout << "from reveal" << std::endl;
-
+            game_board->getAdjacentMines(cell);
             game_board->revealCell(cell);
             break;
         default:
@@ -70,7 +65,7 @@ void gameMenu(std::shared_ptr<GameBoard>& game_board)
         {
         case GameBoard::GameStatus::ACTIVE:
             game_board->printGameBoard();
-            userChoice(game_board, run, status);
+            userChoice(game_board, status);
             break;
         case GameBoard::GameStatus::WIN:
             std::cout << "YOU HAVE WON!" << std::endl;
