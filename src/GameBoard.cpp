@@ -313,7 +313,7 @@ bool GameBoard::hasAdjacentMineAtMinusOne(const int cell) const
 
 bool GameBoard::hasAdjacentMineAtPlusOne(const int cell) const
 {
-    return cells.at(cell-1).get()->hasMine();
+    return cells.at(cell+1).get()->hasMine();
 }
 
 bool GameBoard::hasAdjacentMineAtPlusGridSizeMinusOne(const int cell) const
