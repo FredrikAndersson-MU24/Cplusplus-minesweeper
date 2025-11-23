@@ -325,7 +325,7 @@ bool GameBoard::hasAdjacentMineAtPlusGridSize(const int cell) const
     return cells.at(cell+grid_size).get()->hasMine();
 }
 
-bool GameBoard::hasAdjacentMineAtPlusGridSizePlusOne(int cell)
+bool GameBoard::hasAdjacentMineAtPlusGridSizePlusOne(const int cell) const
 {
     return cells.at(cell+grid_size+1).get()->hasMine();
 }
