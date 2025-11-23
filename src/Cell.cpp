@@ -70,3 +70,8 @@ void Cell::setAdjacentMines(int i)
 {
     adjacentMines = i;
 }
+
+bool Cell::isFlagged() const
+{
+    return is_flagged;
+}
