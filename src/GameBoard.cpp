@@ -20,12 +20,13 @@ GameBoard::~GameBoard() {
     std::cout << "Game board deconstructed" << std::endl;
 }
 
-void GameBoard::initGameBoard()
+void GameBoard::initGameBoard(std::shared_ptr<GameBoard>& game_board, int size)
 {
-    initColumns();
-    initRows();
-    initCells();
-    randomizeMines();
+    game_board = std::make_shared<GameBoard>(size);
+    game_board->initColumns();
+    game_board->initRows();
+    game_board->initCells();
+    game_board->randomizeMines();
 }
 
 void GameBoard::printGameBoard() const
