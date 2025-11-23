@@ -330,7 +330,7 @@ bool GameBoard::hasAdjacentMineAtPlusGridSizePlusOne(const int cell) const
     return cells.at(cell+grid_size+1).get()->hasMine();
 }
 
-int GameBoard::getAdjacentMinesTopLeft(const int cell)
+int GameBoard::getAdjacentMinesTopLeft(const int cell) const
 {
     int adjacent = 0;
     if (hasAdjacentMineAtPlusOne(cell)) adjacent++;
@@ -339,7 +339,7 @@ int GameBoard::getAdjacentMinesTopLeft(const int cell)
     return adjacent;
 }
 
-int GameBoard::getAdjacentMinesLeft(const int cell)
+int GameBoard::getAdjacentMinesLeft(const int cell) const
 {
     int adjacent = 0;
     if (hasAdjacentMineAtMinusGridSize(cell)) adjacent++;
@@ -350,7 +350,7 @@ int GameBoard::getAdjacentMinesLeft(const int cell)
     return adjacent;
 }
 
-int GameBoard::getAdjacentMinesRight(const int cell)
+int GameBoard::getAdjacentMinesRight(const int cell) const
 {
     int adjacent = 0;
     if (hasAdjacentMineAtMinusGridSizeMinusOne(cell)) adjacent++;
@@ -361,7 +361,7 @@ int GameBoard::getAdjacentMinesRight(const int cell)
     return adjacent;
 }
 
-int GameBoard::getAdjacentMinesTopRight(const int cell)
+int GameBoard::getAdjacentMinesTopRight(const int cell) const
 {
     int adjacent = 0;
     if (hasAdjacentMineAtMinusOne(cell)) adjacent++;
@@ -370,7 +370,7 @@ int GameBoard::getAdjacentMinesTopRight(const int cell)
     return adjacent;
 }
 
-int GameBoard::getAdjacentMinesBottomRight(const int cell)
+int GameBoard::getAdjacentMinesBottomRight(const int cell) const
 {
     int adjacent = 0;
     if (hasAdjacentMineAtMinusGridSizeMinusOne(cell)) adjacent++;
@@ -379,7 +379,7 @@ int GameBoard::getAdjacentMinesBottomRight(const int cell)
     return adjacent;
 }
 
-int GameBoard::getAdjacentMinesBottomLeft(const int cell)
+int GameBoard::getAdjacentMinesBottomLeft(const int cell) const
 {
     int adjacent = 0;
     if (hasAdjacentMineAtMinusGridSize(cell)) adjacent++;
@@ -388,7 +388,7 @@ int GameBoard::getAdjacentMinesBottomLeft(const int cell)
     return adjacent;
 }
 
-int GameBoard::getAdjacentMinesTop(const int cell)
+int GameBoard::getAdjacentMinesTop(const int cell) const
 {
     int adjacent = 0;
     if (hasAdjacentMineAtMinusOne(cell)) adjacent++;
@@ -399,7 +399,7 @@ int GameBoard::getAdjacentMinesTop(const int cell)
     return adjacent;
 }
 
-int GameBoard::getAdjacentMinesBottom(const int cell)
+int GameBoard::getAdjacentMinesBottom(const int cell) const
 {
     int adjacent = 0;
     if (hasAdjacentMineAtMinusGridSizeMinusOne(cell)) adjacent++;
@@ -410,7 +410,7 @@ int GameBoard::getAdjacentMinesBottom(const int cell)
     return adjacent;
 }
 
-int GameBoard::getAdjacentMinesCenter(const int cell)
+int GameBoard::getAdjacentMinesCenter(const int cell) const
 {
     int adjacent = 0;
     if (hasAdjacentMineAtMinusGridSizeMinusOne(cell)) adjacent++;

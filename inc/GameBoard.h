@@ -46,15 +46,15 @@ private:
     bool hasAdjacentMineAtPlusGridSizeMinusOne(int cell) const;
     bool hasAdjacentMineAtPlusGridSize(int cell) const;
     bool hasAdjacentMineAtPlusGridSizePlusOne(int cell) const;
-    int getAdjacentMinesTopLeft(int cell);
-    int getAdjacentMinesLeft(int cell);
-    int getAdjacentMinesRight(int cell);
-    int getAdjacentMinesTopRight(int cell);
-    int getAdjacentMinesBottomRight(int cell);
-    int getAdjacentMinesBottomLeft(int cell);
-    int getAdjacentMinesTop(int cell);
-    int getAdjacentMinesBottom(int cell);
-    int getAdjacentMinesCenter(int cell);
+    int getAdjacentMinesTopLeft(int cell) const;
+    int getAdjacentMinesLeft(int cell) const;
+    int getAdjacentMinesRight(int cell) const;
+    int getAdjacentMinesTopRight(int cell) const;
+    int getAdjacentMinesBottomRight(int cell) const;
+    int getAdjacentMinesBottomLeft(int cell) const;
+    int getAdjacentMinesTop(int cell) const;
+    int getAdjacentMinesBottom(int cell) const;
+    int getAdjacentMinesCenter(int cell) const;
 };
 
 
