@@ -31,7 +31,7 @@ void gridSizeMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<
     }
 }
 
-void userChoice(const std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame, std::shared_ptr<GameBoard::GameStatus>& game_status)
+void userChoice(const std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<GameBoard::GameStatus>& game_status)
 {
         std::cout << "What would you like to do?" << std::endl;
         std::cout << "1. Flag" << std::endl;
