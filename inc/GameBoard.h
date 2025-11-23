@@ -11,12 +11,11 @@ public:
     explicit GameBoard(int num_cells);
     ~GameBoard();
     void printGameBoard() const;
-    void initGameBoard();
+    static void initGameBoard(std::shared_ptr<GameBoard>& game_board, int size);
     int findCell(const char* coord);
     void getAdjacentMines(int cell);
     void flagCell(int cell);
     void revealCell(int cell);
-    // int validateCell(const char* coord);
     std::vector<std::shared_ptr<Cell>> getCells();
     enum class GameStatus {ACTIVE, WIN, LOSS};
     GameStatus checkGameStatus(int cell);
@@ -46,7 +45,7 @@ private:
     bool hasAdjacentMineAtPlusOne(int cell) const;
     bool hasAdjacentMineAtPlusGridSizeMinusOne(int cell) const;
     bool hasAdjacentMineAtPlusGridSize(int cell) const;
-    bool hasAdjacentMineAtPlusGridSizePlusOne(int cell);
+    bool hasAdjacentMineAtPlusGridSizePlusOne(int cell) const;
     int getAdjacentMinesTopLeft(int cell);
     int getAdjacentMinesLeft(int cell);
     int getAdjacentMinesRight(int cell);
