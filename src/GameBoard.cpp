@@ -259,11 +259,7 @@ std::vector<std::shared_ptr<Cell>> GameBoard::getCells()
 GameBoard::GameStatus GameBoard::checkGameStatus(int cell)
 {
     GameStatus response = GameStatus::ACTIVE;
-    if (cells.at(cell)->hasMine() && cells.at(cell)->isFlagged())
-    {
-        response = GameStatus::ACTIVE;
-    }
-    if (cells.at(cell)->hasMine())
+    if (cells.at(cell)->hasMine() && !cells.at(cell)->isFlagged())
     {
         response = GameStatus::LOSS;
     }
