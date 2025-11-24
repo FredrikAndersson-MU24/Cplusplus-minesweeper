@@ -6,20 +6,20 @@
 #include <iostream>
 #include <random>
 
+#include "InputHandlers.h"
+
 
 GameBoard::GameBoard(int cells) :
 num_cells(cells),
 grid_size(static_cast<int>(std::sqrt(cells))),
 num_mines(grid_size),
-revealed_cells(0)
+revealed_cells(0),
+game_status(GameStatus::ACTIVE)
 {
-    std::cout << "Game board constructed" << std::endl;
 }
 
-GameBoard::~GameBoard() {
-    std::cout << "Game board deconstructed" << std::endl;
-}
-
+// Takes a shared pointer reference to a GameBoard object.
+// Initialises all necessary parameters to make it game ready.
 void GameBoard::initGameBoard(std::shared_ptr<GameBoard>& game_board, int size)
 {
     game_board = std::make_shared<GameBoard>(size);
@@ -56,14 +56,14 @@ void GameBoard::printGameBoard() const
     {
         if ((i - 1) % grid_size == 0) // Print row label and first col cell
         {
-            std::cout << rows.at(rowCounter) << " | " << cells.at(i - 1).get()->showCell() << " | ";
+            std::cout << rows.at(rowCounter) << " | " << cells.at(i - 1).get()->getMarker() << " | ";
             rowCounter++;
         } else if (i % grid_size != 0) // Print i:th col cell
         {
-            std::cout << cells.at(i - 1).get()->showCell() << " | ";
+            std::cout << cells.at(i - 1).get()->getMarker() << " | ";
         } else // Print last col cell of row
         {
-            std::cout << cells.at(i - 1).get()->showCell() << " |";
+            std::cout << cells.at(i - 1).get()->getMarker() << " |";
             std::cout << std::endl;
             std::cout << "  |--";
             for ( int j = 1; j <= grid_size - 1; j++)
@@ -85,7 +85,6 @@ void GameBoard::initColumns()
         columns.push_back(colLabel);
         colLabel++;
     }
-    // std::cout << "columns initiated : " << columns.size() << std::endl;
 }
 
 // Populating the rows vector with the correct number
@@ -100,6 +99,8 @@ void GameBoard::initRows()
     }
 }
 
+// Given the coordinate, returns the index of
+// the cell from the vector of cells as int
 int GameBoard::findCell(const char* coord)
 {
     char row = 0;
@@ -138,10 +139,12 @@ int GameBoard::findCell(const char* coord)
         col_index++;
     }
     const int cell = row_index * grid_size + col_index;
-    getPlacement(row_index, col_index);
+    setPlacement(row_index, col_index);
     return cell;
 }
 
+// Create the chosen number of cells
+// and add them to the vector of cells.
 void GameBoard::initCells()
 {
     for (int i = 1; i <= num_cells; i++)
@@ -151,24 +154,26 @@ void GameBoard::initCells()
     }
 }
 
+// Randomize placement of mines on the grid.
+// Number of mines = grid_size.
 void GameBoard::randomizeMines() const
 {
     int range = num_cells - 1;
     std::random_device r;
     std::default_random_engine e(r());
     std::uniform_int_distribution<int> uniform_dist(0, range);
-    int mines[grid_size];
+    std::vector<int> mines;
     for (int i = 0; i < grid_size; i++)
     {
         int mean = uniform_dist(e);
-            for (int mine : mines)
+            for (const int mine : mines)
             {
                 while (mine == mean)
                 {
                     mean = uniform_dist(e);
                 }
             }
-        mines[i] = mean;
+        mines.push_back(mean);
     }
     for (const int mine : mines)
     {
@@ -176,7 +181,8 @@ void GameBoard::randomizeMines() const
     }
 }
 
-void GameBoard::getPlacement(const int row_index, const int col_index)
+// Sets the placement of the cell on the board.
+void GameBoard::setPlacement(const int row_index, const int col_index)
 {
     if (row_index == 0)
     {
@@ -212,6 +218,8 @@ void GameBoard::getPlacement(const int row_index, const int col_index)
     }
 }
 
+// Finds cells adjacent to the chosen cell on the board
+// and sets adjacent_mines to the number of mines found.
 void GameBoard::getAdjacentMines(const int cell)
 {
     int adjacent = 0;
@@ -246,39 +254,66 @@ void GameBoard::getAdjacentMines(const int cell)
         break;
     default: ;
     }
-    std::cout << "ADJACENT : " << adjacent << std::endl;
     cells.at(cell).get()->setAdjacentMines(adjacent);
 }
 
-
-std::vector<std::shared_ptr<Cell>> GameBoard::getCells()
+GameBoard::GameStatus GameBoard::getGameStatus() const
 {
-    return cells;
+    return game_status;
 }
 
-GameBoard::GameStatus GameBoard::checkGameStatus(int cell)
+// Updates game_status if WIN or LOSS conditions are met.
+void GameBoard::updateGameStatus()
 {
-    GameStatus response = GameStatus::ACTIVE;
-    if (cells.at(cell)->hasMine() && !cells.at(cell)->isFlagged())
+    for (const std::shared_ptr<Cell>& cell : cells)
     {
-        response = GameStatus::LOSS;
+        if (cell->isGuessed() && !cell->isFlagged() && cell->hasMine())
+        {
+            game_status = GameStatus::LOSS;
+        }
     }
     if (num_cells - num_mines == revealed_cells)
     {
-        response = GameStatus::WIN;
+        game_status = GameStatus::WIN;
     }
-    return response;
 }
 
-void GameBoard::flagCell(int cell)
+void GameBoard::flagCell()
 {
+    const std::string coord = getValidCoordinate(getRows(), getColumns());
+    const int cell = findCell(coord.c_str());
     cells.at(cell)->setIsFlagged(true);
+    cells.at(cell)->updateMarker();
+    updateGameStatus();
 }
 
-void GameBoard::revealCell(int cell)
+void GameBoard::revealCell()
 {
+    const std::string coord = getValidCoordinate(getRows(), getColumns());
+    const int cell = findCell(coord.c_str());
+    getAdjacentMines(cell);
     cells.at(cell)->setIsGuessed(true);
+    cells.at(cell)->updateMarker();
     revealed_cells++;
+    updateGameStatus();
+}
+
+void GameBoard::revealAllMines() const
+{
+    for (const std::shared_ptr<Cell>& cell : cells)
+    {
+        if (cell->hasMine())
+        {
+            cell->updateMarker('X');
+        }
+    }
+}
+
+void GameBoard::endGame(const std::string& prompt) const
+{
+    revealAllMines();
+    printGameBoard();
+    std::cout << prompt << std::endl;
 }
 
 std::vector<int> GameBoard::getColumns()
