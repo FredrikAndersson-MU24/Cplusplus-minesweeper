@@ -12,12 +12,11 @@ std::string getValidCoordinate(const std::vector<char>& rows, const std::vector<
         std::getline(std::cin, input);
         std::stringstream ss(input);
         if (validCoordinate(input.c_str(), rows, columns)){
-            std::cout << input << std::endl;
             return input;
         }
         std::cout << "Please enter a valid coordinate! "
-                     "(Row " << rows.front() <<  "-" << rows.back() <<
-                       ", column " << columns.front() <<  "-" << columns.back() <<  ". For example A1.)\n";
+                        "(Row " << rows.front() <<  "-" << rows.back() <<
+                        ", column " << columns.front() <<  "-" << columns.back() <<  ". For example A1.)\n";
     }
 }
 
@@ -62,7 +61,6 @@ bool validCoordinate(const char* input, const std::vector<char>& rows, const std
         }
         if (index != 0 && std::isdigit(temp))
         {
-            std::cout << std::isdigit(temp) << std::endl;
             col_as_string.push_back(temp);
         }
         input++;
@@ -71,7 +69,6 @@ bool validCoordinate(const char* input, const std::vector<char>& rows, const std
     if (validRow && !col_as_string.empty())
     {
         const int col_as_int = stoi(col_as_string);
-        std::cout << col_as_int << std::endl;
         for (const int column : columns)
         {
             if (col_as_int == column)
