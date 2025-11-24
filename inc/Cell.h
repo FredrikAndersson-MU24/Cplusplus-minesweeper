@@ -1,22 +1,25 @@
-#ifndef INDIVIDUELLT_PROJEKTARBETE_CELL_H
-#define INDIVIDUELLT_PROJEKTARBETE_CELL_H
-#include <memory>
+#ifndef CELL_H
+#define CELL_H
+
 #include <string>
+
 
 class Cell
 {
 public:
     Cell();
-    ~Cell();
-    std::string showCell();
-    void setHasMine(bool b);
-    void setIsFlagged(bool b);
-    void setIsGuessed(bool b);
-    void setMarker(const std::string& str);
+    ~Cell() = default;
+    std::string getMarker();
+    void updateMarker();
+    void updateMarker(char c);
     void setAdjacentMines(int i);
-    int getId() const;
-    bool hasMine() const;
-    bool isFlagged() const;
+    [[nodiscard]] int getId() const;
+    void setHasMine(bool b);
+    [[nodiscard]] bool hasMine() const;
+    void setIsFlagged(bool b);
+    [[nodiscard]] bool isFlagged() const;
+    void setIsGuessed(bool b);
+    [[nodiscard]] bool isGuessed() const;
 
 private:
     int id;
@@ -25,7 +28,7 @@ private:
     bool has_mine;
     bool is_guessed;
     bool is_flagged;
-    // char revealAdjacentMines(int num_cells, int grid_size, int cell);
 };
 
-#endif //INDIVIDUELLT_PROJEKTARBETE_CELL_H
+
+#endif

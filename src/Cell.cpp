@@ -5,18 +5,33 @@
 int next_id = 0;
 
 Cell::Cell() :
-id(next_id), adjacentMines(0), marker("O"), has_mine(false), is_guessed(false), is_flagged(false)
+id(next_id), adjacentMines(0), marker(" "), has_mine(false), is_guessed(false), is_flagged(false)
 {
-    // std::cout << "Cell " << id << " constructed" << std::endl;
     next_id++;
 }
 
-Cell::~Cell()
+std::string Cell::getMarker()
 {
-    // std::cout << "Cell " << id << " destructed" << std::endl;
+    return marker;
 }
 
-std::string Cell::showCell()
+bool Cell::hasMine() const
+{
+    return has_mine;
+}
+
+
+void Cell::setHasMine(const bool b)
+{
+    has_mine = b;
+};
+
+void Cell::setIsFlagged(const bool b)
+{
+    is_flagged = b;
+}
+
+void Cell::updateMarker()
 {
     if (has_mine && is_guessed)
     {
@@ -31,32 +46,14 @@ std::string Cell::showCell()
     {
         marker = 'M';
     }
-
-    return marker;
 }
 
-bool Cell::hasMine() const
+void Cell::updateMarker(const char c)
 {
-    return has_mine;
+    marker = c;
 }
 
-
-void Cell::setHasMine(bool b)
-{
-    has_mine = b;
-};
-
-void Cell::setIsFlagged(bool b)
-{
-    is_flagged = b;
-}
-
-void Cell::setMarker(const std::string& str)
-{
-    marker = str;
-}
-
-void Cell::setIsGuessed(bool b)
+void Cell::setIsGuessed(const bool b)
 {
     is_guessed = b;
 }
@@ -66,7 +63,7 @@ int Cell::getId() const
     return id;
 }
 
-void Cell::setAdjacentMines(int i)
+void Cell::setAdjacentMines(const int i)
 {
     adjacentMines = i;
 }
@@ -74,4 +71,9 @@ void Cell::setAdjacentMines(int i)
 bool Cell::isFlagged() const
 {
     return is_flagged;
+}
+
+bool Cell::isGuessed() const
+{
+    return is_guessed;
 }

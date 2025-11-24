@@ -1,5 +1,6 @@
-#ifndef INDIVIDUELLT_PROJEKTARBETE_INPUTHANDLERS_H
-#define INDIVIDUELLT_PROJEKTARBETE_INPUTHANDLERS_H
+#ifndef INPUTHANDLERS_H
+#define INPUTHANDLERS_H
+
 #include <string>
 #include <vector>
 
@@ -11,4 +12,4 @@ std::string getValidCoordinate(const std::vector<char>& rows, const std::vector<
 int getIntInRange(int min, int max);
 
 
-#endif //INDIVIDUELLT_PROJEKTARBETE_INPUTHANDLERS_H
+#endif
