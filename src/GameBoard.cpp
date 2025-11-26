@@ -76,10 +76,9 @@ bool GameBoard::loadGame(std::shared_ptr<GameBoard>& game_board)
     }
     std::cout << "LOADING GAME..." << std::endl;
     int nc, rc;
-    file >> nc >> rc;
     if (!(file >> nc >> rc))
     {
-        std::cout << "CORRUPTED FILE" << std::endl;
+        std::cout << "CORRUPT FILE" << std::endl;
         return false;
     }
     game_board = std::make_shared<GameBoard>(nc, rc);
@@ -90,7 +89,11 @@ bool GameBoard::loadGame(std::shared_ptr<GameBoard>& game_board)
         bool has_mine, is_flagged, is_guessed;
         int adjacent;
         char marker;
-        file >> has_mine >> is_flagged >> is_guessed >> marker >> adjacent;
+        if (!(file >> has_mine >> is_flagged >> is_guessed >> marker >> adjacent))
+        {
+            std::cout << "CORRUPT FILE" << std::endl;
+            return false;
+        }
         cell->setHasMine(has_mine);
         cell->setIsFlagged(is_flagged);
         cell->setIsGuessed(is_guessed);
