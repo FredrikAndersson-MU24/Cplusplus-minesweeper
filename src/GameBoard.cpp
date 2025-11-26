@@ -1,12 +1,16 @@
 #include "GameBoard.h"
 #include "Cell.h"
+#include "InputHandlers.h"
 
+#include <charconv>
 #include <cmath>
+#include <cstring>
+#include <fstream>
 #include <functional>
 #include <iostream>
 #include <random>
 
-#include "InputHandlers.h"
+
 
 
 GameBoard::GameBoard(int cells) :
@@ -36,6 +40,67 @@ void GameBoard::initGameBoard(std::shared_ptr<GameBoard>& game_board, int size)
     game_board->initRows();
     game_board->initCells();
     game_board->randomizeMines();
+}
+
+void GameBoard::saveGame()
+{
+    const std::string filename = "./saved_game.txt";
+    std::ofstream file(filename);
+    if(!file.is_open())
+    {
+        std::cout << "COULD NOT OPEN FILE" << std::endl;
+        return;
+    };
+    file << num_cells << "\n";
+    file << revealed_cells << "\n";
+    for (const std::shared_ptr<Cell>& cell : cells) {
+        file << cell->hasMine() << " "
+             << cell->isFlagged() << " "
+             << cell->isGuessed() << " "
+             << (cell->getMarker() == ' ' ? '_' : cell->getMarker()) << " "
+             << cell->getAdjacentMines() << "\n";
+        }
+    file.close();
+    std::cout << (file.is_open() ? "File open" : "File closed") << "\n\n";
+    std::cout << "GAME HAS BEEN SAVED!" << std::endl;
+
+}
+
+bool GameBoard::loadGame(std::shared_ptr<GameBoard>& game_board)
+{
+    const std::string filename = "./saved_game.txt";
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cout << "COULD NOT OPEN FILE" << std::endl;
+        return false;
+    }
+    std::cout << "LOADING GAME..." << std::endl;
+    int nc, rc;
+    file >> nc >> rc;
+    if (!(file >> nc >> rc))
+    {
+        std::cout << "CORRUPTED FILE" << std::endl;
+        return false;
+    }
+    game_board = std::make_shared<GameBoard>(nc, rc);
+    game_board->initRows();
+    game_board->initColumns();
+    game_board->initCells();
+    for (const std::shared_ptr<Cell>& cell : game_board.get()->getCells()) {
+        bool has_mine, is_flagged, is_guessed;
+        int adjacent;
+        char marker;
+        file >> has_mine >> is_flagged >> is_guessed >> marker >> adjacent;
+        cell->setHasMine(has_mine);
+        cell->setIsFlagged(is_flagged);
+        cell->setIsGuessed(is_guessed);
+        marker == '_' ? cell->updateMarker(' ') : cell->updateMarker(marker);
+        cell->setAdjacentMines(adjacent);
+    }
+    file.close();
+    std::cout << (file.is_open() ? "File open" : "File closed") << "\n\n";
+    std::cout << "GAME HAS BEEN LOADED!" << std::endl;
+    return true;
 }
 
 void GameBoard::printGameBoard() const
@@ -94,6 +159,11 @@ void GameBoard::initColumns()
         columns.push_back(colLabel);
         colLabel++;
     }
+}
+
+std::vector<std::shared_ptr<Cell>> GameBoard::getCells()
+{
+    return cells;
 }
 
 // Populating the rows vector with the correct number
@@ -300,6 +370,10 @@ void GameBoard::revealCell()
 {
     const std::string coord = getValidCoordinate(getRows(), getColumns());
     const int cell = findCell(coord.c_str());
+    if (cells.at(cell)->isGuessed()) // If cell has already been guessed, dont add to revealed_cells.
+    {
+        return;
+    }
     getAdjacentMines(cell);
     cells.at(cell)->setIsGuessed(true);
     cells.at(cell)->updateMarker();

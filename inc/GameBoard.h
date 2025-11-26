@@ -25,6 +25,9 @@ public:
     void updateGameStatus();
     std::vector<int> getColumns();
     std::vector<char> getRows();
+    std::vector<std::shared_ptr<Cell>> getCells();
+    void saveGame();
+    static bool loadGame(std::shared_ptr<GameBoard>& game_board);
 
 private:
     int num_cells; // Total number of cells.
