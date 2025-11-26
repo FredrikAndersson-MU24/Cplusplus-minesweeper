@@ -4,14 +4,18 @@
 #include <iostream>
 #include <memory>
 
-void gridSizeMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame)
+// Choose the size of the game board grid
+// Returns:
+// TRUE if a grid size is chosen.
+// FALSE if user chooses GO BACK option.
+bool gridSizeMenu(std::shared_ptr<GameBoard>& game_board)
 {
     std::cout << "--- NEW GAME ---" << std::endl;
     std::cout << "Please select grid size:" << std::endl;
     std::cout << "1. 3*3" << std::endl;
     std::cout << "2. 6*6" << std::endl;
     std::cout << "3. 9*9" << std::endl;
-    std::cout << "0. QUIT" << std::endl;
+    std::cout << "0. GO BACK" << std::endl;
     switch (getIntInRange(0, 3))
     {
     case 1:
@@ -24,22 +28,22 @@ void gridSizeMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<
         GameBoard::initGameBoard(game_board, 81);
         break;
     case 0:
-        *runGame = false;
-        break;
+        return false;
     default:
         break;
     }
+    return true;
 }
 
+// Guess/reveal cell
 void guess(const std::shared_ptr<GameBoard>& game_board)
 {
     game_board->revealCell();
 }
 
-
+// Flag cell
 void flag(const std::shared_ptr<GameBoard>& game_board)
 {
-
     game_board->flagCell();
 }
 
@@ -76,18 +80,19 @@ void turn(const std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bo
     }
 }
 
-void gameMenu()
+// Checks game status.
+// If ACTIVE: new turn.
+// If LOSS or WIN: end game.
+void gameLoop(const std::shared_ptr<GameBoard>& game_board)
 {
-    std::shared_ptr<GameBoard> game_board;
     std::shared_ptr<bool> run = std::make_shared<bool>(true);
-    gridSizeMenu(game_board, run);
     while (*run)
     {
         switch (game_board.get()->getGameStatus())
         {
         case GameBoard::GameStatus::ACTIVE:
             game_board->printGameBoard();
-            takeTurn(game_board, run);
+            turn(game_board, run);
             break;
         case GameBoard::GameStatus::WIN:
             game_board->endGame("YOU WON!");
@@ -150,10 +155,10 @@ void mainMenu(const std::shared_ptr<bool>& run_game)
 
 int main ()
 {
-    const std::shared_ptr<bool> runGame = std::make_shared<bool>(true);
-    while (*runGame)
+    const std::shared_ptr<bool> run_game = std::make_shared<bool>(true);
+    while (*run_game)
     {
-        mainMenu(runGame);
+        mainMenu(run_game);
     }
     return 0;
 }
