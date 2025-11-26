@@ -4,14 +4,14 @@
 #include <ostream>
 #include <sstream>
 
-std::string getValidCoordinate(const std::vector<char>& rows, const std::vector<int>& columns)
+std::string InputHandlers::getValidCoordinate(const std::vector<char>& rows, const std::vector<int>& columns)
 {
     while (true) {
         std::cout << "Enter coordinate  : " << std::endl;
         std::string input;
         std::getline(std::cin, input);
         std::stringstream ss(input);
-        if (validCoordinate(input.c_str(), rows, columns)){
+        if (InputHandlers::validCoordinate(input.c_str(), rows, columns)){
             return input;
         }
         std::cout << "Please enter a valid coordinate! "
@@ -20,7 +20,7 @@ std::string getValidCoordinate(const std::vector<char>& rows, const std::vector<
     }
 }
 
-bool validCoordinate(const char* input, const std::vector<char>& rows, const std::vector<int>& columns)
+bool InputHandlers::validCoordinate(const char* input, const std::vector<char>& rows, const std::vector<int>& columns)
 {
     int index = 0;
     bool validColumn = false;
@@ -85,7 +85,7 @@ bool validCoordinate(const char* input, const std::vector<char>& rows, const std
 }
 
 
-int getIntInRange(const int min, const int max){
+int InputHandlers::getIntInRange(const int min, const int max){
     int value;
     while (true) {
         std::string line;
