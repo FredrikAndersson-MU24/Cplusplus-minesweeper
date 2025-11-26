@@ -35,7 +35,7 @@ private:
     std::vector<char> rows;
     std::vector<std::shared_ptr<Cell>> cells;
     int grid_size; // Sqrt of num_cells. To set num of rows and columns.
-    int num_mines;
+    int num_mines; // Total num of mines (currently num_mines = grid_size)
     int revealed_cells; // Number of cells that the player has revealed. Used for determining WIN state.
     enum class Placement {LEFT, RIGHT, TOP, BOTTOM, TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT, CENTER};
     Placement placement{};
