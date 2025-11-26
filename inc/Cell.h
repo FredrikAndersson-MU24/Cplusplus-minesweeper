@@ -9,10 +9,11 @@ class Cell
 public:
     Cell();
     ~Cell() = default;
-    std::string getMarker();
+    [[nodiscard]] char getMarker() const;
     void updateMarker();
     void updateMarker(char c);
     void setAdjacentMines(int i);
+    [[nodiscard]] int getAdjacentMines() const;
     [[nodiscard]] int getId() const;
     void setHasMine(bool b);
     [[nodiscard]] bool hasMine() const;
@@ -23,8 +24,8 @@ public:
 
 private:
     int id;
-    int adjacentMines;
-    std::string marker;
+    int adjacent_mines;
+    char marker;
     bool has_mine;
     bool is_guessed;
     bool is_flagged;
