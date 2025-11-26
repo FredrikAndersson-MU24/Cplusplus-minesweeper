@@ -349,7 +349,7 @@ void GameBoard::updateGameStatus()
 {
     for (const std::shared_ptr<Cell>& cell : cells)
     {
-        if (cell->isGuessed() && !cell->isFlagged() && cell->hasMine())
+        if (cell->isGuessed() && cell->hasMine())
         {
             game_status = GameStatus::LOSS;
         }
