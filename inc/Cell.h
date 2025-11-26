@@ -1,11 +1,10 @@
 #ifndef CELL_H
 #define CELL_H
 
-#include <string>
-
 
 class Cell
 {
+
 public:
     Cell();
     ~Cell() = default;
@@ -29,6 +28,7 @@ private:
     bool has_mine;
     bool is_guessed;
     bool is_flagged;
+
 };
 
 
