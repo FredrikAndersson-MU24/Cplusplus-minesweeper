@@ -1,6 +1,6 @@
 #include "GameBoard.h"
 #include "Cell.h"
-#include "InputHandlers.h"
+#include "../utils/inc/InputHandlers.h"
 
 #include <charconv>
 #include <cmath>
@@ -9,8 +9,6 @@
 #include <functional>
 #include <iostream>
 #include <random>
-
-
 
 
 GameBoard::GameBoard(int cells) :
@@ -362,7 +360,7 @@ void GameBoard::updateGameStatus()
 
 void GameBoard::flagCell()
 {
-    const std::string coord = getValidCoordinate(getRows(), getColumns());
+    const std::string coord = InputHandlers::getValidCoordinate(getRows(), getColumns());
     const int cell = findCell(coord.c_str());
     cells.at(cell)->setIsFlagged(true);
     cells.at(cell)->updateMarker();
@@ -371,7 +369,7 @@ void GameBoard::flagCell()
 
 void GameBoard::revealCell()
 {
-    const std::string coord = getValidCoordinate(getRows(), getColumns());
+    const std::string coord = InputHandlers::getValidCoordinate(getRows(), getColumns());
     const int cell = findCell(coord.c_str());
     if (cells.at(cell)->isGuessed()) // If cell has already been guessed, dont add to revealed_cells.
     {
