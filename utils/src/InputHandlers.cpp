@@ -4,6 +4,7 @@
 #include <ostream>
 #include <sstream>
 
+// Validate row and column input from user
 std::string InputHandlers::getValidCoordinate(const std::vector<char>& rows, const std::vector<int>& columns)
 {
     while (true) {
@@ -20,6 +21,7 @@ std::string InputHandlers::getValidCoordinate(const std::vector<char>& rows, con
     }
 }
 
+// Validate the actual input to see if it follows the specified format and is a valid coordinate
 bool InputHandlers::validCoordinate(const char* input, const std::vector<char>& rows, const std::vector<int>& columns)
 {
     int index = 0;
