@@ -9,6 +9,7 @@
 
 class GameBoard
 {
+
 public:
     explicit GameBoard(int num_cells);
     GameBoard(int num_cells, int revealed_cells);
@@ -64,6 +65,7 @@ private:
     [[nodiscard]] int getAdjacentMinesTop(int cell) const;
     [[nodiscard]] int getAdjacentMinesBottom(int cell) const;
     [[nodiscard]] int getAdjacentMinesCenter(int cell) const;
+
 };
 
 
