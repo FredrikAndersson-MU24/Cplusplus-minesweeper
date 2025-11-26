@@ -12,4 +12,5 @@ add_executable(minesweeper
         main.cpp
         src/Cell.cpp
         src/GameBoard.cpp
-        utils/src/InputHandlers.cpp)
+        utils/src/InputHandlers.cpp
+        utils/src/Menus.cpp)

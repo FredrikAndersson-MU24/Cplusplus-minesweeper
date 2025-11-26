@@ -5,11 +5,15 @@
 #include <vector>
 
 
-bool validCoordinate(const char* input, const std::vector<char>& rows, const std::vector<int>& columns);
+class InputHandlers
+{
 
-std::string getValidCoordinate(const std::vector<char>& rows, const std::vector<int>& columns);
+public:
+    static bool validCoordinate(const char* input, const std::vector<char>& rows, const std::vector<int>& columns);
+    static std::string getValidCoordinate(const std::vector<char>& rows, const std::vector<int>& columns);
+    static int getIntInRange(int min, int max);
 
-int getIntInRange(int min, int max);
+};
 
 
 #endif
