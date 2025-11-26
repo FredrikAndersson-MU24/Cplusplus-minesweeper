@@ -11,6 +11,7 @@ class GameBoard
 {
 public:
     explicit GameBoard(int num_cells);
+    GameBoard(int num_cells, int revealed_cells);
     ~GameBoard() = default;
     void printGameBoard() const;
     static void initGameBoard(std::shared_ptr<GameBoard>& game_board, int size);

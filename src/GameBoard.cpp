@@ -18,6 +18,15 @@ game_status(GameStatus::ACTIVE)
 {
 }
 
+GameBoard::GameBoard(const int num_cells, const int revealed_cells) :
+num_cells(num_cells),
+grid_size(static_cast<int>(std::sqrt(num_cells))),
+num_mines(grid_size),
+revealed_cells(revealed_cells),
+game_status(GameStatus::ACTIVE)
+{
+}
+
 // Takes a shared pointer reference to a GameBoard object.
 // Initialises all necessary parameters to make it game ready.
 void GameBoard::initGameBoard(std::shared_ptr<GameBoard>& game_board, int size)
