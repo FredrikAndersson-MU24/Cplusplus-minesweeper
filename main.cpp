@@ -4,14 +4,18 @@
 #include <iostream>
 #include <memory>
 
-void gridSizeMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& runGame)
+// Choose the size of the game board grid
+// Returns:
+// TRUE if a grid size is chosen.
+// FALSE if user chooses GO BACK option.
+bool gridSizeMenu(std::shared_ptr<GameBoard>& game_board)
 {
     std::cout << "--- NEW GAME ---" << std::endl;
     std::cout << "Please select grid size:" << std::endl;
     std::cout << "1. 3*3" << std::endl;
     std::cout << "2. 6*6" << std::endl;
     std::cout << "3. 9*9" << std::endl;
-    std::cout << "0. QUIT" << std::endl;
+    std::cout << "0. GO BACK" << std::endl;
     switch (getIntInRange(0, 3))
     {
     case 1:
@@ -24,59 +28,71 @@ void gridSizeMenu(std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<
         GameBoard::initGameBoard(game_board, 81);
         break;
     case 0:
-        *runGame = false;
+        return false;
+    default:
+        break;
+    }
+    return true;
+}
+
+// Guess/reveal cell
+void guess(const std::shared_ptr<GameBoard>& game_board)
+{
+    game_board->revealCell();
+}
+
+// Flag cell
+void flag(const std::shared_ptr<GameBoard>& game_board)
+{
+    game_board->flagCell();
+}
+
+// Save current game progress
+void saveGame(const std::shared_ptr<GameBoard>& game_board)
+{
+    game_board->saveGame();
+}
+
+// Present user choices each turn.
+void turn(const std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& run)
+{
+    std::cout << "What would you like to do?" << std::endl;
+    std::cout << "1. Flag" << std::endl;
+    std::cout << "2. Guess" << std::endl;
+    std::cout << "3. Save game" << std::endl;
+    std::cout << "0. Quit" << std::endl;
+    switch (getIntInRange(0, 3))
+    {
+    case 1:
+        flag(game_board);
+        break;
+    case 2:
+        guess(game_board);
+        break;
+    case 3:
+        saveGame(game_board);
+        break;
+    case 0:
+        *run = false;
         break;
     default:
         break;
     }
 }
 
-void guess(const std::shared_ptr<GameBoard>& game_board)
+// Checks game status.
+// If ACTIVE: new turn.
+// If LOSS or WIN: end game.
+void gameLoop(const std::shared_ptr<GameBoard>& game_board)
 {
-    game_board->revealCell();
-}
-
-
-void flag(const std::shared_ptr<GameBoard>& game_board)
-{
-
-    game_board->flagCell();
-}
-
-void takeTurn(const std::shared_ptr<GameBoard>& game_board, const std::shared_ptr<bool>& run)
-{
-        std::cout << "What would you like to do?" << std::endl;
-        std::cout << "1. Flag" << std::endl;
-        std::cout << "2. Guess" << std::endl;
-        std::cout << "0. Quit" << std::endl;
-        switch (getIntInRange(0, 2))
-        {
-        case 1:
-            flag(game_board);
-            break;
-        case 2:
-            guess(game_board);
-            break;
-        case 0:
-            *run = false;
-            break;
-        default:
-            break;
-        }
-}
-
-void gameMenu()
-{
-    std::shared_ptr<GameBoard> game_board;
     std::shared_ptr<bool> run = std::make_shared<bool>(true);
-    gridSizeMenu(game_board, run);
     while (*run)
     {
         switch (game_board.get()->getGameStatus())
         {
         case GameBoard::GameStatus::ACTIVE:
             game_board->printGameBoard();
-            takeTurn(game_board, run);
+            turn(game_board, run);
             break;
         case GameBoard::GameStatus::WIN:
             game_board->endGame("YOU WON!");
@@ -90,35 +106,59 @@ void gameMenu()
     }
 }
 
-void mainMenu(const std::shared_ptr<bool>& runGame)
+// Load game from file.
+void loadGame()
 {
-        while (*runGame)
+    std::shared_ptr<GameBoard> game_board;
+    if (GameBoard::loadGame(game_board))
+    {
+    gameLoop(game_board);
+    }
+}
+
+// Start a new game.
+void newGame()
+{
+    std::shared_ptr<GameBoard> game_board;
+    if (gridSizeMenu(game_board))
+    {
+    gameLoop(game_board);
+    }
+}
+
+void mainMenu(const std::shared_ptr<bool>& run_game)
+{
+    while (*run_game)
+    {
+        std::cout << "--- MAIN MENU ---" << std::endl;
+        std::cout << "1. START NEW GAME" << std::endl;
+        std::cout << "2. LOAD GAME" << std::endl;
+        std::cout << "0. QUIT" << std::endl;
+        switch (getIntInRange(0, 2))
         {
-            std::cout << "--- MAIN MENU ---" << std::endl;
-                std::cout << "1. START NEW GAME" << std::endl;
-                std::cout << "0. QUIT" << std::endl;
-                switch (getIntInRange(0, 1))
-                {
-                case 1:
-                    gameMenu();
-                    break;
-                case 0:
-                    *runGame = false;
-                    break;
-                default:
-                    std::cout << "PLEASE ENTER A VALID CHOICE!" << std::endl;
-                    break;
-                }
+        case 1:
+            newGame();
+            break;
+        case 2:
+            loadGame();
+            break;
+        case 0:
+            *run_game = false;
+            break;
+        default:
+            std::cout << "PLEASE ENTER A VALID CHOICE!" << std::endl;
+            break;
         }
+    }
 }
 
 
 int main ()
 {
-    const std::shared_ptr<bool> runGame = std::make_shared<bool>(true);
-    while (*runGame)
+    const std::shared_ptr<bool> run_game = std::make_shared<bool>(true);
+    while (*run_game)
     {
-        mainMenu(runGame);
+        mainMenu(run_game);
     }
     return 0;
 }

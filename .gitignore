@@ -51,3 +51,4 @@ CMakeUserPresets.json
 
 # Build directory
 /build
+/saved_game.txt

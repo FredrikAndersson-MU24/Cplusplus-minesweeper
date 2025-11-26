@@ -5,12 +5,12 @@
 int next_id = 0;
 
 Cell::Cell() :
-id(next_id), adjacentMines(0), marker(" "), has_mine(false), is_guessed(false), is_flagged(false)
+id(next_id), adjacent_mines(0), marker(' '), has_mine(false), is_guessed(false), is_flagged(false)
 {
     next_id++;
 }
 
-std::string Cell::getMarker()
+char Cell::getMarker() const
 {
     return marker;
 }
@@ -38,13 +38,10 @@ void Cell::updateMarker()
         marker = 'X';
     } else if (is_guessed)
     {
-        marker = std::to_string(adjacentMines);
+        marker = std::to_string(adjacent_mines)[0];
     } else if (is_flagged)
     {
         marker = 'F';
-    } else if (has_mine)
-    {
-        marker = 'M';
     }
 }
 
@@ -65,7 +62,12 @@ int Cell::getId() const
 
 void Cell::setAdjacentMines(const int i)
 {
-    adjacentMines = i;
+    adjacent_mines = i;
+}
+
+int Cell::getAdjacentMines() const
+{
+    return adjacent_mines;
 }
 
 bool Cell::isFlagged() const
