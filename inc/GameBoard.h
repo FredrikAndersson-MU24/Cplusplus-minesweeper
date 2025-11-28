@@ -48,14 +48,7 @@ private:
     void randomizeMines() const;
     void setPlacement(int row_index, int col_index);
     void getAdjacentMines(int cell);
-    [[nodiscard]] bool hasAdjacentMineAtMinusGridSizeMinusOne(int cell) const;
-    [[nodiscard]] bool hasAdjacentMineAtMinusGridSize(int cell) const;
-    [[nodiscard]] bool hasAdjacentMineAtMinusGridSizePlusOne(int cell) const;
-    [[nodiscard]] bool hasAdjacentMineAtMinusOne(int cell) const;
-    [[nodiscard]] bool hasAdjacentMineAtPlusOne(int cell) const;
-    [[nodiscard]] bool hasAdjacentMineAtPlusGridSizeMinusOne(int cell) const;
-    [[nodiscard]] bool hasAdjacentMineAtPlusGridSize(int cell) const;
-    [[nodiscard]] bool hasAdjacentMineAtPlusGridSizePlusOne(int cell) const;
+    [[nodiscard]] int adjacentMineAtOffset(int cell, int offset) const;
     [[nodiscard]] int getAdjacentMinesTopLeft(int cell) const;
     [[nodiscard]] int getAdjacentMinesLeft(int cell) const;
     [[nodiscard]] int getAdjacentMinesRight(int cell) const;
