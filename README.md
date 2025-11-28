@@ -14,14 +14,16 @@ to control the life cycle of instantiated objects.
 
 ## Project structure
 
-The main classes are Cell and GameBoard, where GameBoard holds a vector of Cell objects. The size of the vector is 
-determined by the size that the user chooses for the GameBoard when starting a new game. Each cell has several member 
-variables to for example keep track of if it has a mine or not. 
+The main classes are `Cell` and `GameBoard`, where GameBoard holds a vector of `Cell` objects. The size of the vector is 
+determined by the size that the user chooses for the `GameBoard` when starting a new game. Although there are three preset 
+board sizes in the game menu, the function has been designed to handle dynamic sizing, given that the total number of 
+cells is a perfect square. Each cell has several member variables to, for example, keep track of if it has a mine or not. 
 
-Two utility classes are implemented to separate the corresponding logic from other classes and promote reusable code.
-InputHandlers have functions to handle and validate user input. Menus contain all menus, where the main menu function is
-static and can is invoked from main without being instantiated. The underlying menus and helper functions are under 
-private access specifier to ensure encapsulation. 
+Two utility classes are implemented to separate their respective logic from other classes and promote reusable code and 
+abstraction:
+- `InputHandlers`: Contains functions to handle and validate user input. 
+- `Menus`: Contains all menus, where the main menu function is static and therefore can be invoked from main.cpp without 
+being instantiated. The underlying menus and helper functions are under private access specifier to ensure encapsulation. 
 
 ```
 project_root/
@@ -41,6 +43,13 @@ project_root/
 ├── main.cpp
 └── CMakeLists.txt
 ```
+
+- `inc/`: Contains header files for the main classes.
+- `src/`: Contains the implementation files for the main classes.
+- `utils/inc/`: Contains header files for utility classes.
+- `utils/src/`: Contains the implementation files for utility classes.
+- `main.cpp`: The main entry point of the application.
+- `CMakeLists.txt`: CMake configuration file for building the project.
 
 
 ## Compiling
