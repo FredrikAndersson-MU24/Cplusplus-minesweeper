@@ -7,10 +7,17 @@ functionality to let the user play the game by revealing tiles, flagging mines a
 
 ## Project description
 The project has been developed with structure, extensibility and abstraction in mind, breaking down problems into small 
-reusable functions, and trying to avoid repetition.  
-
-Memory management has been a central part of the project, taking actions to avoid memory leaks by using smart pointers
+reusable functions, and trying to avoid repetition. Memory management has been a central part of the project, taking actions to avoid memory leaks by using smart pointers
 to control the life cycle of instantiated objects.
+
+The game offers the user menus to navigate the game and perform certain actions. When the game starts the user is 
+presented with the option of starting a new game or loading a saved gaming. If a new game is started the user gets to 
+choose from a number of preset gameboard sizes. Once the user has made their choice the game starts, giving the 
+user the options of flagging or revealing a cell or saving the game state. When a cell not containing a mine is revealed
+the cell shows the number of adjacent cells holding a mine. If a cell that has a mine is revealed the game is lost. 
+Each turn that the user has not revealed a cell containing a mine the game continues. The purpose of flagging cells
+is for the user to mark cells they think have mines. The only way to win though is to reveal all cells that does not 
+have a mine.
 
 ## Project structure
 
