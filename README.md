@@ -53,10 +53,15 @@ project_root/
 
 
 ## Compiling
-To ensure that the project will compile regardless of operating system, a CMakeLists file has been provided. 
-Make sure you have CMake installed. Compile using the command:
+To ensure that the project will compile regardless of operating system, a `CMakeLists.txt` file has been provided. 
+Make sure you have CMake installed.  
+Use this command to compile the project in a directory called `build`:
 ```
 cmake --build build
+```
+Run the executable:
+```
+./build/minesweeper
 ```
 
 ## Reflection/Final thoughts 
