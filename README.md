@@ -74,12 +74,15 @@ Run the executable:
 ## Reflection/Final thoughts 
 During the project I have been able to use my knowledge of C++, particularly memory management in C++, and also both 
 prior and new knowledge of Object-Oriented Programming (OOP). 
-By using relevant smart pointers the life cycle of allocated heap memory is controlled. Part of the memory managemnet has
+By using relevant smart pointers, the life cycle of allocated heap memory is managed. Part of the memory management has 
 also been to decide in which scope each smart pointer should live, implementing them in relevant scopes to have them
 deleted when going out of scope when they are no longer needed.
 
 Breaking down problems into smaller single purpose functions fits the concept of OOP well as it promotes 
 encapsulation and also keeping the code DRY(Don't Repeat Yourself).
 
-I have explored using CMakeLists to structure the project and to make sure it will compile on any operating system, 
-as long as CMake is installed.
+I have explored the use of CMake and CMakeLists to structure the project and to make sure it will compile on any 
+operating system, as long as CMake is installed.
+
+All in all the project has been very interesting as I have had the possibility to reaffirm my knowledge gained during
+the course and also exploring new areas of C++ programming.
